@@ -1,16 +1,50 @@
+/******************************************************************************
+ * assets/stylesheets/bootstrap_and_overrides.scss
+ *
+ * Define bootstrap customizations.
+ ******************************************************************************/
+
+//-----------------------------------------------------------------------------
+// Import the CareerQB Global Styles
+//-----------------------------------------------------------------------------
+@import "global_styles";
+
+$navbar-default-brand-color:        $primary-brand;
+
+
 // import the CSS framework
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
 // make all images responsive by default
 img {
-  @extend .img-responsive;
-  margin: 0 auto;
+  @extend                     .img-responsive;
+  margin:                     0 auto;
   }
 // override for the 'Home' navigation link
 .navbar-brand {
-  font-size: inherit;
+  font-size:                  18px;
   }
+  
+main {
+  @extend                     .container;
+  background-color:           $body-bkgrd;
+  padding-bottom:             40px;
+  width:                      100%;
+  margin-top:                 51px; // accommodate the navbar
+}
+
+section {
+  @extend                     .row;
+  margin-top:                 20px;
+}
+
+.submit {
+  @extend                     .btn;
+  @extend                     .btn-primary;
+  @extend                     .btn-lg;
+}
+
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
 // create your own classes
@@ -26,24 +60,10 @@ img {
   @extend .col-md-6;
   @extend .text-center;
   }
-.submit {
-  @extend .btn;
-  @extend .btn-primary;
-  @extend .btn-lg;
-  }
+
 // apply styles to HTML elements
 // to make views framework-neutral
-main {
-  @extend .container;
-  background-color: #eee;
-  padding-bottom: 80px;
-  width: 100%;
-  margin-top: 51px; // accommodate the navbar
-  }
-section {
-  @extend .row;
-  margin-top: 20px;
-  }
+
 
 // Styles for form views
 // using Bootstrap

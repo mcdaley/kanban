@@ -1,15 +1,19 @@
 !!!
 %html
   %head
-    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
-    %title= content_for?(:title) ? yield(:title) : 'Kanban'
-    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Kanban'}"}
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application'
+    %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0"}
+    %title= content_for?(:title) ? yield(:title) : 'OrganizeIt'
+    %meta{  :name     => "description", 
+            :content  => "#{content_for?(:description) ? yield(:description) : 'OrganizeIt'}"}
+    = stylesheet_link_tag     'application', media: 'all'
+    = javascript_include_tag  'application'
     = csrf_meta_tags
+  
   %body
     %header
       = render 'layouts/navigation'
-    %main{:role => "main"}
-      = render 'layouts/messages'
-      = yield
+    
+    %div.container-fluid
+      %main{:role => "main"}
+        = render 'layouts/messages'
+        = yield
