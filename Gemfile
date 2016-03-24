@@ -22,6 +22,7 @@ group :development do
   gem 'rails_layout'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'annotate'
 end
 
 group :development, :test do
@@ -35,6 +36,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'shoulda-matchers',     '~> 3.1'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
