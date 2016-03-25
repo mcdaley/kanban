@@ -1,0 +1,11 @@
+-# ----------------------------------------------------------------------------
+-# views/tasks/_task.html.haml
+-# ----------------------------------------------------------------------------
+%div.row
+  %div.col-sm-12.col-md-12.col-lg-12
+    %h2= link_to task.title, task_path(task)
+    %p=  task.description
+    %p=  task.due
+    =     link_to "Edit",   edit_task_path(task)
+    |
+    =     link_to "Delete", task_path(task), method: :delete

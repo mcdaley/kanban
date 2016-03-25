@@ -1,0 +1,18 @@
+-# ----------------------------------------------------------------------------
+-# views/tasks/_form.html.haml
+-# ----------------------------------------------------------------------------
+%div.row
+  %div.col-sm-12.col-md-12.col-lg-12
+    = simple_form_for @task,  remote: false, 
+                              as:     'task', 
+                              html:   { novalidate: false } do |f|
+                            
+      = f.error_notification
+    
+      = f.input     :title,         { autofocus:    true,
+                                      placeholder:  "Enter task"   }
+      = f.input     :description,   { placeholder:  "Enter notes"  }
+      = f.input     :due
+    
+      = f.submit    "Submit", class: "submit"
+      = submit_tag  "Cancel", class: "btn btn-default"
