@@ -45,13 +45,16 @@ describe User do
     it { is_expected.to have_db_column(         :confirmation_sent_at   ) }
     it { is_expected.to have_db_column(         :unconfirmed_email      ) }
     it { is_expected.to have_db_column(         :email                  ) }
+    
+    it { is_expected.to allow_value("").for(    :name                   ) }
     it { is_expected.to validate_presence_of(   :email                  ) }
     it { is_expected.to validate_uniqueness_of( :email ).case_insensitive }
+    it { is_expected.to have_many(              :tasks                  ) }
   end # end of describe "accessible fields"
   
   describe "unconfirmed user" do
     let(:unconfirmed_user) { FactoryGirl.build(:unconfirmed_user) }
-    
+        
     it "does not require a name" do
       expect( FactoryGirl.build(:unconfirmed_user, name: "") ).to be_valid
     end

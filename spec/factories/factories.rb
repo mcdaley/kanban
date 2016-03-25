@@ -3,7 +3,9 @@
 #------------------------------------------------------------------------------
 
 FactoryGirl.define do
-
+  #----------------------------------------------------------------------------
+  # Users
+  #----------------------------------------------------------------------------
   factory :unconfirmed_user, class: User do |f|
     f.name                    "Thurmon Thomas"
     f.email                   "thurmon.thomas@bills.com"
@@ -28,5 +30,17 @@ FactoryGirl.define do
     end # end of factory :user
     
   end # end of factory :uncomfirmed_user
+  
+  #----------------------------------------------------------------------------
+  # Tasks
+  #----------------------------------------------------------------------------
+  factory :task do |f|
+    f.title                     "First task"
+    f.description               "First description"
+    ##f.due_text                  (Date.today + 4).strftime('%m/%d/%Y')
+    f.due                       Date.today + 4
+    f.complete                  false
+    association :user,          factory: :user
+  end # end of factory :task
 
 end # end of FactoryGirl.define
