@@ -57,7 +57,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    logger.debug("TASKS: update, params=#{params.inspect}")
+    logger.debug_params(params, "TASKS")
     #
     # Redirect to prvious  page is user clicks cancel
     #
