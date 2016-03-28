@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action   :authenticate_user!
   
-  before_filter   :set_referer,       only: [:new, :edit]
+  before_filter   :set_referer,       only: [:new, :edit, :index]
   
   def show
     logger.debug("TASKS, params=#{params.inspect}")
@@ -57,6 +57,7 @@ class TasksController < ApplicationController
   end
 
   def update
+    logger.debug("TASKS: update, params=#{params.inspect}")
     #
     # Redirect to prvious  page is user clicks cancel
     #

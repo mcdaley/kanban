@@ -1,11 +1,31 @@
 -# ----------------------------------------------------------------------------
 -# views/tasks/_task.html.haml
 -# ----------------------------------------------------------------------------
-%div.row
-  %div.col-sm-12.col-md-12.col-lg-12
-    %h2= link_to task.title, task_path(task)
-    %p=  task.description
-    %p=  task.due
-    =     link_to "Edit",   edit_task_path(task)
-    |
-    =     link_to "Delete", task_path(task), method: :delete
+%div.card
+  %div.row
+    %div.col-sm-12.col-md-12.col-lg-12
+      = form_for task,  url:    task_path(task),
+                        method: :patch,
+                        remote: false,  
+                        html:   { class: "form-inline", role: "form" }  do |f|
+        %div.title-div
+          %div.checkbox
+            = f.check_box   :complete,  class: "checkbox task-checkbox"      
+            = f.submit      "Update",   class: "btn btn-sm"
+
+          %div.title            
+            %h4= link_to task.title, task_path(task)
+        
+      
+        %div.notes-div
+          %p=  task.description
+    
+        %div.row
+          %div.col-sm-12.col-md-12.col-lg-12.form-group
+            %p=  "Due: #{due_date_text(task)}"
+      
+        %div.row
+          %div.col-sm-12.col-md-12.col-lg-12.form-group
+            =     link_to "Edit",   edit_task_path(task)
+            |
+            =     link_to "Delete", task_path(task), method: :delete

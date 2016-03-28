@@ -29,18 +29,36 @@ FactoryGirl.define do
       end
     end # end of factory :user
     
+    factory :user_with_tasks, :parent => :user do
+      name                "Jim Kelly"
+      email               "jkelly@bills.com"
+
+      after(:create) do |user|
+        FactoryGirl.create(:task, user: user)
+      end
+    end
+        
   end # end of factory :uncomfirmed_user
   
   #----------------------------------------------------------------------------
   # Tasks
   #----------------------------------------------------------------------------
   factory :task do |f|
-    f.title                     "First task"
-    f.description               "First description"
+    f.title                       "First task"
+    f.description                 "First description"
     ##f.due_text                  (Date.today + 4).strftime('%m/%d/%Y')
-    f.due                       Date.today + 4
-    f.complete                  false
-    association :user,          factory: :user
+    f.due                         Date.today + 4
+    f.complete                    false
+    association :user,            factory: :user
+    
+    factory :completed_due_3_days_ago do
+      title                       "Completed task and due 3 days ago"
+      description                 "Completed task and due 3 days ago"
+      #due_text                    (Date.today - 3).strftime('%m/%d/%Y')
+      due                         (Date.today - 3)
+      complete                    true
+    end
+    
   end # end of factory :task
 
 end # end of FactoryGirl.define
