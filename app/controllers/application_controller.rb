@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   # controller methods.
   #
   def set_referer
+    ## logger.debug("TASKS: Set referer to #{request.referer}")
     session[:return_to] = request.referer unless request.referer == root_url
   end
   
@@ -22,6 +23,7 @@ class ApplicationController < ActionController::Base
   #                      the session[:return_to]
   #
   def get_referer(alternate_path = nil)
+    ## logger.debug("TASKS: Get referer, session[:return_to]=#{session[:return_to]}")
     return alternate_path       unless alternate_path.nil?
     return session[:return_to]  unless session[:return_to].nil?
     return :back

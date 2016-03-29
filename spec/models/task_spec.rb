@@ -24,7 +24,9 @@ RSpec.describe Task, type: :model do
     it { is_expected.to     have_db_column(       :user_id              ) }
     it { is_expected.to     have_db_column(       :created_at           ) }
     it { is_expected.to     have_db_column(       :updated_at           ) }
-    
+  end # end of describe "accessible fields"
+  
+  describe "Validations" do
     it { is_expected.to     validate_presence_of( :title                ) }
     it { is_expected.to     validate_length_of(   :title).is_at_least(1)  }
     it { is_expected.to     validate_length_of(   :title).is_at_most(255) }
@@ -37,7 +39,27 @@ RSpec.describe Task, type: :model do
     it { is_expected.to_not allow_value("hello").for(     :due_text     ) }
     
     it { is_expected.to belong_to(                :user                 ) }
-  end # end of describe "accessible fields"
+  end # end of describe "Validations"
+  
+  describe "Scopes" do
+    let(:user_with_tasks)       { FactoryGirl.create( :user_with_tasks  ) }
+    let(:user_with_zero_tasks)  { FactoryGirl.create( :user             ) }
+    
+    describe 'Task .complete' do      
+      it "returns all completed tasks" do
+        expect( user_with_tasks.tasks.complete.length       ).to    eq(6)
+        expect( user_with_zero_tasks.tasks.complete.length  ).to    eq(0)
+      end
+    end # end of describe 'Task .complete'
+    
+    describe 'Task .incomplete' do
+      it "returns all incomplete tasks" do
+        expect( user_with_tasks.tasks.incomplete.length       ).to  eq(6)
+        expect( user_with_zero_tasks.tasks.incomplete.length  ).to  eq(0)
+      end      
+    end # end of describe 'Task .incomplete'
+    
+  end # end of describe "scopes"
 
 =begin  
   describe "invalid tasks" do
@@ -46,7 +68,7 @@ RSpec.describe Task, type: :model do
   end # end of describe "invalid tasks"
 =end  
   
-  describe "valid tasks" do
+  describe 'Task #new' do
     let(:user)      { FactoryGirl.create(:user)               }
     let(:task)      { FactoryGirl.create(:task, user: user)   }
     let(:due)       { (Date.today + 4)                        }

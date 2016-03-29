@@ -34,7 +34,18 @@ FactoryGirl.define do
       email               "jkelly@bills.com"
 
       after(:create) do |user|
-        FactoryGirl.create(:task, user: user)
+        FactoryGirl.create( :task,                            user: user )
+        FactoryGirl.create( :completed_due_3_days_ago,        user: user )
+        FactoryGirl.create( :completed_due_1_day_ago,         user: user )
+        FactoryGirl.create( :completed_due_today,             user: user )
+        FactoryGirl.create( :completed_due_today,             user: user )
+        FactoryGirl.create( :completed_due_1_day_from_now,    user: user )
+        FactoryGirl.create( :completed_due_7_days_from_now,   user: user )
+        FactoryGirl.create( :incomplete_due_5_days_from_now,  user: user )
+        FactoryGirl.create( :incomplete_due_today,            user: user )
+        FactoryGirl.create( :incomplete_due_1_day_ago,        user: user )
+        FactoryGirl.create( :incomplete_due_3_days_ago,       user: user )
+        FactoryGirl.create( :incomplete_due_5_days_ago ,      user: user )
       end
     end
         
@@ -51,12 +62,74 @@ FactoryGirl.define do
     association :user,            factory: :user
     
     factory :completed_due_3_days_ago do
-      title                       "Completed task and due 3 days ago"
+      title                       "Title - Completed task and due 3 days ago"
       description                 "Completed task and due 3 days ago"
       due_text                    (Date.today - 3).strftime('%m/%d/%Y')
       complete                    true
     end
     
+    factory :completed_due_1_day_ago do
+      title                       "Title - Completed task and due 1 day ago"
+      description                 "Completed task and due 1 day ago"
+      due_text                    (Date.today - 1).strftime('%m/%d/%Y')
+      complete                    true
+    end
+
+    factory :completed_due_today do
+      title                       "Title - Completed task and due today"
+      description                 "Completed task and due today"
+      due_text                    (Date.today).strftime('%m/%d/%Y')
+      complete                    true
+    end
+
+    factory :completed_due_1_day_from_now do
+      title                       "Title - Completed task and due tomorrow"
+      description                 "Completed task and due tomorrow"
+      due_text                    (Date.today + 1).strftime('%m/%d/%Y')
+      complete                    true
+    end
+    
+    factory :completed_due_7_days_from_now do
+      title                       "Title - Completed task and due in 7 days"
+      description                 "Completed task and due in 7 days"
+      due_text                    (Date.today + 7).strftime('%m/%d/%Y')
+      complete                    true
+    end
+
+    factory :incomplete_due_5_days_from_now do
+      title                       "Title - Incomplete task and due in 5 days"
+      description                 "Incomplete task and due in 5 days"
+      due_text                    (Date.today + 5).strftime('%m/%d/%Y')
+      complete                    false
+    end
+
+    factory :incomplete_due_today do
+      title                       "Title - Incomplete task and due today"
+      description                 "Incomplete task and due today"
+      due_text                    (Date.today).strftime('%m/%d/%Y')
+      complete                    false
+    end
+
+    factory :incomplete_due_1_day_ago do
+      title                       "Title - Incomplete task and due 1 day ago"
+      description                 "Incomplete task and due 1 day ago"
+      due_text                    (Date.today - 1).strftime('%m/%d/%Y')
+      complete                    false
+    end
+    
+    factory :incomplete_due_3_days_ago do
+      title                       "Title - Incomplete task and due 3 days ago"
+      description                 "Incomplete task and due 3 days ago"
+      due_text                    (Date.today - 3).strftime('%m/%d/%Y')
+      complete                    false
+    end
+
+    factory :incomplete_due_5_days_ago do
+      title                       "Title - Incomplete task and due 5 days ago"
+      description                 "Incomplete task and due 5 days ago"
+      due_text                    (Date.today - 5).strftime('%m/%d/%Y')
+      complete                    false
+    end    
   end # end of factory :task
 
 end # end of FactoryGirl.define

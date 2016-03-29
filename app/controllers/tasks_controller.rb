@@ -4,17 +4,23 @@ class TasksController < ApplicationController
   before_filter   :set_referer,       only: [:new, :edit, :index]
   
   def show
-    logger.debug("TASKS, params=#{params.inspect}")
+    logger.debug_params(params, "TASKS")
+    
     @user   = current_user
     @task   = @user.tasks.find(params[:id])
   end
 
   def index
-    @user   = current_user
-    @tasks  = @user.tasks.all
+    logger.debug_params(params, "TASKS")
+    
+    @user             = current_user
+    @incomplete_tasks = @user.tasks.incomplete
+    @complete_tasks   = @user.tasks.complete
   end
   
   def new
+    logger.debug_params(params, "TASKS")
+    
     @user = current_user
     @task = @user.tasks.new
   end
@@ -49,6 +55,8 @@ class TasksController < ApplicationController
   end
 
   def edit
+    logger.debug_params(params, "TASKS")
+    
     @user = current_user
     @task = @user.tasks.find(params[:id])
     
@@ -59,6 +67,7 @@ class TasksController < ApplicationController
 
   def update
     logger.debug_params(params, "TASKS")
+    
     #
     # Redirect to prvious  page is user clicks cancel
     #
@@ -89,6 +98,8 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    logger.debug_params(params, "TASKS")
+    
     @user = current_user
     @task = @user.tasks.destroy(params[:id])
     

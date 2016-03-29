@@ -6,8 +6,12 @@
     %h1 Tasks
 
 %div.row
-  %div.col.sm-12.col-md-12.col-lg-12
-    = render @tasks
+  %div.col.sm-6.col-md-6.col-lg-6
+    = render @incomplete_tasks
+    
+  %div.col.sm-6.col-md-6.col-lg-6
+    = render @complete_tasks
+    
 
 %div.row
   %div.col-sm-12.col-md-12.col-lg-12

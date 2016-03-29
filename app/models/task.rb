@@ -27,6 +27,12 @@ class Task < ActiveRecord::Base
   before_save   :save_due_text
   
   #----------------------------------------------------------------------------
+  # Scopes
+  #----------------------------------------------------------------------------
+  scope         :incomplete,  -> { where(complete:  false).order( due: :asc ) }
+  scope         :complete,    -> { where(complete:  true).order(  due: :asc ) }
+  
+  #----------------------------------------------------------------------------
   # Public
   #----------------------------------------------------------------------------
   def due_text
@@ -43,7 +49,6 @@ class Task < ActiveRecord::Base
   # to a date. If not then add a validation error.
   #
   def check_due_text
-    logger.debug "TASKS: Entered check_due_text, due_text=#{@due_text}"
     if @due_text.present?
       begin
         self.due = Date.strptime(@due_text, "%m/%d/%Y")
@@ -69,7 +74,6 @@ class Task < ActiveRecord::Base
   # the database.
   #
   def save_due_text
-    logger.debug "TASKS: Entered save_due_text, due_text=#{@due_text}"
     self.due = Date.strptime(@due_text, "%m/%d/%Y") if @due_text.present?
   end
   
