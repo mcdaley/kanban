@@ -46,16 +46,14 @@ FactoryGirl.define do
   factory :task do |f|
     f.title                       "First task"
     f.description                 "First description"
-    ##f.due_text                  (Date.today + 4).strftime('%m/%d/%Y')
-    f.due                         Date.today + 4
+    f.due_text                    (Date.today + 4).strftime('%m/%d/%Y')
     f.complete                    false
     association :user,            factory: :user
     
     factory :completed_due_3_days_ago do
       title                       "Completed task and due 3 days ago"
       description                 "Completed task and due 3 days ago"
-      #due_text                    (Date.today - 3).strftime('%m/%d/%Y')
-      due                         (Date.today - 3)
+      due_text                    (Date.today - 3).strftime('%m/%d/%Y')
       complete                    true
     end
     

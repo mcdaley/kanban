@@ -47,6 +47,14 @@ class ActiveSupport::Logger
   # Just pass in the params hash as well as an optional grep string that
   # you can use to debug in the log file.
   #
+  # ==== Attributes
+  # * +params+      - Params passed into the controller
+  # * +grep_string+ - Unique string to prefix the log message, so it can be
+  #                   grepped from the log file
+  #
+  # ==== Example
+  # logger.debug(params, "TASK")
+  #
   def debug_params(params, grep_string = '')
     prefix = grep_string.empty? ? "" : "[#{grep_string}] "
     self.debug { "#{prefix} Controller=[#{params[:controller]}], Action=[#{params[:action]}], Params=[#{params.inspect}]" }
@@ -55,6 +63,11 @@ class ActiveSupport::Logger
   ##
   # Log an object via a call to inspect. Just pass in the object and an
   # optional grep string that can be used to search in the log file
+  #
+  # ==== Attributes
+  # * +object+      - Object that you want to inspect
+  # * +grep_string+ - Unique string to prefix the log message, so it can be 
+  #                   grepped from the log file
   #
   def log_inspect(object, grep_string = '')
     prefix = grep_string.empty? ? "" : "[#{grep_string}] "
@@ -67,6 +80,16 @@ class ActiveSupport::Logger
   # the errors and the grep_string is an optional string to prefix the log
   # message, so that you can use grep to filter out the messages when 
   # debugging. 
+  #
+  # ==== Attributes
+  # * +model+       - Model that could not be saved
+  # * +grep_string+ - Unique string to prefix the log message, so it can be
+  #                   grepped from the log file
+  #
+  # ==== Examples
+  # if !@model.save
+  #   logger.log_error_messages(@model, "MODEL")
+  #   ...
   #
   def log_error_messages(model, grep_string = '')
     prefix = grep_string.empty? ? "" : "[#{grep_string}] "

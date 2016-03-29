@@ -20,6 +20,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    logger.debug_params(params, "TASKS")
     #
     # If user clicks cancel, do not create the task, redirect back to
     # previous page, and exit the mehtod #create
@@ -79,7 +80,10 @@ class TasksController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render  'new'   }
+        logger.log_error_messages(@task, "TASKS")
+        format.html { 
+          render  'new'   
+        }
       end
     end     
   end
@@ -104,7 +108,7 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit( :title,
                                     :description,     
-                                    :due,
+                                    :due_text,
                                     :complete,
                                     :user_id )
     end
