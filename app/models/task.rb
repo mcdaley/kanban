@@ -31,6 +31,7 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   scope         :incomplete,  -> { where(complete:  false).order( due: :asc ) }
   scope         :complete,    -> { where(complete:  true).order(  due: :asc ) }
+  scope         :todos,       -> { order( complete: :asc, due: :asc ) }
   
   #----------------------------------------------------------------------------
   # Public

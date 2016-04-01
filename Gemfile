@@ -12,6 +12,7 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'haml-rails'
 gem 'simple_form'
+gem 'active_model_serializers'
 
 group :development do
   gem 'web-console',          '~> 2.0'

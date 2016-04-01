@@ -16,15 +16,15 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
 
-  describe "accessible fields" do
-    it { is_expected.to     have_db_column(       :title                ) }
-    it { is_expected.to     have_db_column(       :description          ) }
-    it { is_expected.to     have_db_column(       :due                  ) }
-    it { is_expected.to     have_db_column(       :complete             ) }
-    it { is_expected.to     have_db_column(       :user_id              ) }
-    it { is_expected.to     have_db_column(       :created_at           ) }
-    it { is_expected.to     have_db_column(       :updated_at           ) }
-  end # end of describe "accessible fields"
+  describe "DB structure" do
+    it { is_expected.to     have_db_column( :title        ).of_type( :string   ) }
+    it { is_expected.to     have_db_column( :description  ).of_type( :string   ) }
+    it { is_expected.to     have_db_column( :due          ).of_type( :datetime ) }
+    it { is_expected.to     have_db_column( :complete     ).of_type( :boolean  ) }
+    it { is_expected.to     have_db_column( :user_id      ).of_type( :integer  ) }
+    it { is_expected.to     have_db_column( :created_at   ).of_type( :datetime ) }
+    it { is_expected.to     have_db_column( :updated_at   ).of_type( :datetime ) }
+  end # end of describe "DB structure"
   
   describe "Validations" do
     it { is_expected.to     validate_presence_of( :title                ) }
