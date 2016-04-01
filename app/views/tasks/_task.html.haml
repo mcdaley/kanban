@@ -4,7 +4,7 @@
 %div.card
   %div.row
     %div.col-sm-12.col-md-12.col-lg-12
-      = form_for task,  url:    task_path(task),
+      = form_for task,  url:    check_task_path(task),
                         method: :patch,
                         remote: false,  
                         html:   { class: "form-inline", role: "form" }  do |f|

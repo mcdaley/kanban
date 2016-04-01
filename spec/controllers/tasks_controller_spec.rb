@@ -227,6 +227,34 @@ RSpec.describe TasksController, type: :controller do
     
   end # end of describe 'PUT #update'
   
+  ##
+  # Test checking a task as complete/incomplete
+  #
+  describe 'PATCH #check' do
+    let(:task)  { user_with_tasks.tasks.incomplete[0]   }
+
+    before  do
+      sign_in user_with_tasks               
+      request.env["HTTP_REFERER"] = tasks_path
+    end
+                
+    describe 'respond_to HTML' do
+      it 'marks task as complete' do
+        patch :check, { id: task.id, task: {complete: true}, format: :html  }
+        task.reload
+        expect(task.complete).to   eq( true )
+      end # end of context 'mark task as complete'
+    end # end of describe 'respond_to HTML
+    
+    describe 'respond_to JSON' do
+      it 'marks task as complete' do
+        patch :check, { id: task.id, task: {complete: true}, format: :json  }
+        task.reload
+        expect(task.complete).to   eq( true )
+      end # end of context 'mark task as complete'
+    end # end of describe 'respond_to JSON'
+  end # end of describe 'PATCH #check'
+  
   describe 'DELETE #destroy' do
     let(:task)  { user_with_tasks.tasks.incomplete[0]   }
     before      { 

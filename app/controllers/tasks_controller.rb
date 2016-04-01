@@ -124,6 +124,29 @@ class TasksController < ApplicationController
       end
     end     
   end
+  
+  ##
+  # Toggle task between complete and incomplete
+  #
+  def check
+    logger.debug_params(params, "TASKS")
+    
+    @user = current_user
+    @task = @user.tasks.find(params[:id])
+    
+    if @task.update_attributes(task_params)
+      respond_to do |format|
+        format.html { redirect_to :back       }
+        format.json { head        :no_content }
+      end
+    else
+      respond_to do |format|
+        logger.log_error_messages(@task, "TASKS")
+        format.html { redirect_to :back                                             }
+        format.json { render      json: @task.errors, status: :unprocessable_entity }
+      end
+    end     
+  end 
 
   def destroy
     logger.debug_params(params, "TASKS")
