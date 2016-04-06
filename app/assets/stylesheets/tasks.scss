@@ -10,6 +10,68 @@
 @import "global_styles";
 @import "bootstrap_and_overrides";
 
+//----------------------------------------------------------------------------- 
+// Task card specific styles
+//-----------------------------------------------------------------------------
+.task-list-group {
+  //** @extend                     .list-group;
+  
+  .list-group-item {
+    border:                   none;
+  }
+}
+
+div.task-card {
+  width:                      100%;
+  height:                     100%;
+  margin:                     0;
+  
+  .task-checkbox {
+    display:                  inline-block;
+    width:                    1.15em;
+    height:                   100%;
+    vertical-align:           top;
+    margin:                   0.15em 0 0 0;
+  }
+  
+  .task-fields {
+    display:                  inline-block;
+    height:                   100%;
+    max-width:                90%;
+    min-width:                80%;
+    margin:                   0;
+    
+    .title {  
+      .update-btn {
+        margin-right:         0.5em;
+      }
+      
+      h4 {
+        font-size:            1.25em;
+        margin:               0.15em 0 0 0;
+        padding:              0;
+      }
+    }
+    
+    .description {
+      p {  
+        display:              inline-block;
+        max-width:            90%;
+        vertical-align:       top;
+        margin:               0.30em 0;
+        //font-weight:          bold;
+      }
+    }
+    
+    .due {
+      margin:                 0.30em 0;
+    }
+  }
+}
+
+//
+// Original code
+//
 .card {
   margin:                     0.75em 0 0 0;
   

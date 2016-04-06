@@ -12,7 +12,8 @@
       = f.input     :title,         { autofocus:    true,
                                       placeholder:  "Enter task"   }
 
-      = f.input     :description,   { placeholder:  "Enter notes"  }
+      = f.input     :description,   { as:           :text, 
+                                      placeholder:  "Enter notes"  }
 
       = f.input     :due_text,      { label:        "Due Date",
                                       placeholder:  "mm/dd/yyyy"   }

@@ -1,31 +1,29 @@
 -# ----------------------------------------------------------------------------
 -# views/tasks/_task.html.haml
 -# ----------------------------------------------------------------------------
-%div.card
+%li.list-group-item
   %div.row
     %div.col-sm-12.col-md-12.col-lg-12
-      = form_for task,  url:    check_task_path(task),
-                        method: :patch,
-                        remote: false,  
-                        html:   { class: "form-inline", role: "form" }  do |f|
-        %div.title-div
-          %div.checkbox
-            = f.check_box   :complete,  class: "checkbox task-checkbox"      
-            = f.submit      "Update",   class: "btn btn-sm"
+      %div.task-card
+        = form_for task,  url:    check_task_path(task),
+                          method: :patch,
+                          remote: false,  
+                          html:   { class: "form-inline", role: "form" }  do |f|
+          %div.task-checkbox
+            = f.check_box   :complete,  class: "checkbox"
 
-          %div.title            
-            %h4= link_to task.title, task_path(task)
-        
+          %div.task-fields
+            %div.title            
+              = f.submit   "Update",   class: "btn btn-sm update-btn"
+              %h4= link_to task.title, task_path(task)
       
-        %div.notes-div
-          %p=  task.description
+            %div.description
+              %p=  task.description
+  
+            %div.due
+              %p=  "Due: #{due_date_text(task)}"
     
-        %div.row
-          %div.col-sm-12.col-md-12.col-lg-12.form-group
-            %p=  "Due: #{due_date_text(task)}"
-      
-        %div.row
-          %div.col-sm-12.col-md-12.col-lg-12.form-group
-            =     link_to "Edit",   edit_task_path(task)
-            |
-            =     link_to "Delete", task_path(task), method: :delete
+            %div.action-ions
+              =     link_to "Edit",   edit_task_path(task)
+              |
+              =     link_to "Delete", task_path(task), method: :delete

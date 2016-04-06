@@ -34,6 +34,7 @@ class TasksController < ApplicationController
     logger.debug_params(params, "TASKS")
     
     @user   = current_user
+    @task   = @user.tasks.new
     @tasks  = @user.tasks.todos
     
     respond_to do |format|
@@ -57,7 +58,7 @@ class TasksController < ApplicationController
     # If user clicks cancel, do not create the task, redirect back to
     # previous page, and exit the mehtod #create
     #
-    if params[:commit] =~ /Cancel/
+    if params[:commit] =~ /Cancel/ || params[:commit] =~ /Clear/
       respond_to do |format|
         format.html {
           redirect_to   get_referer
@@ -70,6 +71,7 @@ class TasksController < ApplicationController
     @task = @user.tasks.new(task_params)
     
     if @task.save
+      logger.debug "TASKS: Created task id=[@task.id], title=[@task.title]"
       respond_to do |format|
         format.html { redirect_to get_referer                   }
         format.json { render      json: @task, status: :created }

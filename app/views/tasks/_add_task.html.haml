@@ -1,0 +1,32 @@
+-# ----------------------------------------------------------------------------
+-# views/tasks/_add_task.html.haml
+-# ----------------------------------------------------------------------------
+%div.panel.panel-default
+  %div.panel-heading
+    %h4 Add a To Do
+  %div.panel-body
+    = render 'form'
+    -# --------------------------------------------------------------
+    -# Custom form_for, need to figure out difference between 
+    -# passing, :task and @task to form_fo
+    -# --------------------------------------------------------------
+        = form_for :task, url:    tasks_path,
+                          method: :post,
+                          remote: false,  
+                          html:   { role: "form" }  do |f|
+                  
+          %div.form-group
+            = f.label       "Title"
+            = f.text_field  :title,       class: "form-control"
+    
+          %div.form-group
+            = f.label       "Description"
+            = f.text_area   :description, class: "form-control"
+      
+          %div.form-group
+            = f.label       "Due Date"
+            = f.text_field  :due_text,    class: "form-control"
+    
+          %div.form-group
+            = f.submit   "Save",    class: "btn btn-primary"
+            = submit_tag "Clear",   class: "btn btn-default"
