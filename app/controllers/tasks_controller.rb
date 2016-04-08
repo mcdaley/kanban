@@ -71,7 +71,7 @@ class TasksController < ApplicationController
     @task = @user.tasks.new(task_params)
     
     if @task.save
-      logger.debug "TASKS: Created task id=[@task.id], title=[@task.title]"
+      logger.debug "TASKS: Created task id=[#{@task.id}], title=[#{@task.title}]"
       respond_to do |format|
         format.html { redirect_to get_referer                   }
         format.json { render      json: @task, status: :created }
@@ -99,7 +99,7 @@ class TasksController < ApplicationController
     logger.debug_params(params, "TASKS")
     
     #
-    # Redirect to prvious  page is user clicks cancel
+    # Redirect to previous  page is user clicks cancel
     #
     if params[:commit] =~ /Cancel/
       respond_to do |format|
@@ -114,9 +114,10 @@ class TasksController < ApplicationController
     @task = @user.tasks.find(params[:id])
     
     if @task.update_attributes(task_params)
+      logger.debug "TASKS: Updated task id=[#{@task.id}], title=[#{@task.title}]"
       respond_to do |format|
         format.html { redirect_to get_referer }
-        format.json { head        :no_content }
+        format.json { render      json: @task }
       end
     else
       respond_to do |format|
@@ -137,6 +138,7 @@ class TasksController < ApplicationController
     @task = @user.tasks.find(params[:id])
     
     if @task.update_attributes(task_params)
+      logger.debug "TASKS: Checked task id=[#{@task.id}], complete=[#{@task.complete}], title=[#{@task.title}]"
       respond_to do |format|
         format.html { redirect_to :back       }
         format.json { head        :no_content }

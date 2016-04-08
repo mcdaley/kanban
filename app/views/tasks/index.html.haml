@@ -1,20 +1,13 @@
 -# ----------------------------------------------------------------------------
 -# views/tasks/index.html.haml
 -# ----------------------------------------------------------------------------
-%div.tasks-board
-  %div.rowt
-    %div.col.sm-12.col-md-12.col-lg-12
-      %h1 Tasks
 
-  %div.row
-    %div.col.sm-8.col-md-8.col-lg-8
-      %ul.list-group.task-list-group
-        = render @tasks.incomplete
-    
-      %ul.list-group.task-list-group
-        = render @tasks.complete
-    
-    %div.col-sm-4.col-md-4.col-lg-4
-      = render 'add_task'
+%div.tasks-container
+  = react_component( 'TasksBoard', { data: @tasks, title: "Task Board" } )
+
+-# ------------------------------------------------------------------
+-# 04/06/2016 - ORIGINAL HTML VERSION
+-# ------------------------------------------------------------------
+
                               
             
