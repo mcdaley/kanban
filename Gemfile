@@ -14,6 +14,7 @@ gem 'haml-rails'
 gem 'simple_form'
 gem 'active_model_serializers'
 gem 'react-rails',              '~> 1.6.0'
+gem 'lodash-rails'
 
 group :development do
   gem 'web-console',            '~> 2.0'

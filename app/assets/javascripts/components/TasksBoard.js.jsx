@@ -12,16 +12,14 @@ var TasksBoard = React.createClass({
     this.setState( { tasks: this.props.data } );
   },
   
-  /////////////////////////////////////////////////////////////////////////////
-  // TODO: 04/06/2016
-  // - NEED TO REPLACE THE React.addons WITH LODASH, SO I CAN MERGE UPDATED
-  //   TASK FIELDS IN A NEW TASK AND THEN REPLACE THE RECORD IN THE STATE
-  /////////////////////////////////////////////////////////////////////////////
-  handleCheck: function(task, data) {
-    console.log('[TasksBoard]: handleToggle');
+  updateTask: function(task, data) {
+    console.log('[TasksBoard]: handleEditRecord');
+    
     var index         = this.state.tasks.indexOf(task);
-    var updated_task  = React.addons.update( task, { $merge: data["task"] } );
-    var tasks         = React.addons.update(this.state.tasks, { $splice: [[index, 1, updated_task]] }) 
+    var updated_task  = _.merge(  task,             data["task"]  );
+    var tasks         = _.map(    this.state.tasks, _.clone       );
+    tasks[index]      = updated_task
+    
     this.replaceState({tasks: tasks});
   },
   
@@ -34,7 +32,7 @@ var TasksBoard = React.createClass({
           <div className="col-sm-12.col-md-12.col-lg-12">
             <TasksHeader  title       = {title}             />
             <TasksList    tasks       = {this.state.tasks} 
-                          handleCheck = {this.handleCheck}  />
+                          handleCheck = {this.updateTask}  />
           </div>
         </div>
       </div>
