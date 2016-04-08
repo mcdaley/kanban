@@ -28,10 +28,10 @@ div.task-card {
   
   .task-checkbox {
     display:                  inline-block;
-    width:                    1.15em;
+    width:                    1.20em;
     height:                   100%;
     vertical-align:           top;
-    margin:                   0.15em 0 0 0;
+    margin:                   0.20em 0 0 0;
   }
   
   .task-fields {
@@ -67,6 +67,10 @@ div.task-card {
       margin:                 0.30em 0;
     }
   }
+}
+
+.hover-bkgrd {
+  background-color:           $hover-bkgrd;
 }
 
 //

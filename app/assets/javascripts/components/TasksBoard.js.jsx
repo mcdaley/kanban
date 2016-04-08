@@ -81,6 +81,20 @@ var TasksList = React.createClass({
 
 var Task = React.createClass({
   
+  /**
+   * Display background when hovering over a task
+   */
+  componentDidMount: function() {
+    $(ReactDOM.findDOMNode(this)).hover(
+      function() {
+        $(this).addClass("hover-bkgrd");
+      },
+      function() {
+        $(this).removeClass("hover-bkgrd");
+      }
+    );
+  },
+  
   handleCheck: function(e) {
     e.preventDefault();
     console.log("[Task.handleCheck] Entered handleCheck()");
@@ -135,6 +149,7 @@ var Task = React.createClass({
                 <div className="due">
                   <p> {due_date} </p>
                 </div>
+
               </div>  
             </div> {/* end of task-card */}
           </div>
