@@ -102,11 +102,11 @@ var Task = React.createClass({
     });
   },
   
-  render: function() {  
+  render: function() {      
     var title       = this.props.task.title;
+    var task_path   = `/tasks/${this.props.task.id}`;
     var description = this.props.task.description || "";
-    var due         = this.props.task.due         || "-";
-    var due_date    = "Due: " + due;
+    var due_date    = "Due: " + formatDateString(this.props.task.due);
     var complete    = this.props.task.complete == true ? "1" : "0";
     var checked     = this.props.task.complete == true ? true : false;
     
@@ -124,12 +124,10 @@ var Task = React.createClass({
               </div>                              
               
               <div className="task-fields">
-                <div className="title">
-                  {/*
-                    <input  type="submit"   name="commit" 
-                            value="Update"  className="btn btn-sm update-btn" />
-                  */}
-                  <h4> {title} </h4>
+                <div className="title">                  
+                  <h4> 
+                    <a href={task_path}> {title} </a>
+                  </h4>
                 </div>
     
                 <div className="description">
