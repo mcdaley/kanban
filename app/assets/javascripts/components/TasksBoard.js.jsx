@@ -30,9 +30,9 @@ var TasksBoard = React.createClass({
       <div className="tasks-board">
         <div className="row">
           <div className="col-sm-12.col-md-12.col-lg-12">
-            <TasksHeader  title       = {title}             />
-            <TasksList    tasks       = {this.state.tasks} 
-                          handleCheck = {this.updateTask}  />
+            <TasksHeader  title           = {title}             />
+            <TasksList    tasks           = {this.state.tasks} 
+                          handleEditTask  = {this.updateTask}  />
           </div>
         </div>
       </div>
@@ -62,9 +62,9 @@ var TasksList = React.createClass({
   render: function() {
     var rows = [];
     this.props.tasks.forEach(function(task) {
-      rows.push( <Task  task        = {task} 
-                        key         = {task.id}
-                        handleCheck = {this.props.handleCheck} /> );
+      rows.push( <Task  task            = {task} 
+                        key             = {task.id}
+                        handleEditTask  = {this.props.handleEditTask} /> );
     }.bind(this));
     
     return (
@@ -80,6 +80,10 @@ var TasksList = React.createClass({
 });
 
 var Task = React.createClass({
+  
+  getInitialState: function() {
+    return { edit: false };
+  },
   
   /**
    * Display background when hovering over a task
@@ -109,12 +113,88 @@ var Task = React.createClass({
       dataType:   "JSON",
       data:       { task: data },
       success:    function(data) {
-        {this.props.handleCheck( this.props.task, data)};
+        {this.props.handleEditTask( this.props.task, data)};
       }.bind(this)
     });
   },
   
-  render: function() {      
+  handleToggle: function(e) {
+    console.log('[Task] handleToggle');
+    e.preventDefault();
+    this.setState( { edit: !this.state.edit } );
+  },
+  
+  handleEdit: function(e) {
+    console.log('[Task] handleEdit');
+    e.preventDefault();
+    
+    var data = {
+      title:        ReactDOM.findDOMNode( this.refs.title       ).value,
+      description:  ReactDOM.findDOMNode( this.refs.description ).value,
+      due_text:     ReactDOM.findDOMNode( this.refs.due         ).value,
+    };
+    
+    $.ajax({
+      method:     "PATCH",
+      url:        `/tasks/${this.props.task.id}`,
+      dataType:   "JSON",
+      data:       { task: data },
+      success:    function(data) {
+        {this.setState({edit: false })};
+        {this.props.handleEditTask( this.props.task, data)};
+      }.bind(this)
+    });
+    
+    return;
+  },
+  
+  taskForm: function() {
+    return (
+      <li className="list-group-item">
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-lg-12">
+            
+            <form onSubmit={this.handleEdit}>
+      
+              <div className='form-group'>
+                <label> Title </label>
+                <input  type          = 'text'   
+                        className     = 'form-control' 
+                        name          = 'title'  
+                        defaultValue  = {this.props.task.title} 
+                        autoFocus     = 'true'
+                        ref           = 'title' />
+              </div>
+          
+              <div className='form-group'>
+                <label> Description </label>
+                <input  type          = 'text'         
+                        className     = 'form-control' 
+                        name          = 'description'  
+                        defaultValue  = {this.props.task.description} 
+                        ref           = 'description' />
+              </div>
+                        
+              <div className='form-group'>
+                <label> Due </label>
+                <input  type          = 'text'   
+                        className     = 'form-control' 
+                        name          = 'due'    
+                        defaultValue  = {formatDateString(this.props.task.due)}
+                        ref           = 'due' />
+              </div>
+                    
+              <button className="btn btn-primary" type="submit" >              Update </button>
+              <button className="btn btn-default" onClick={this.handleToggle}> Cancel </button>
+            </form>
+                      
+          </div>
+        </div>
+      </li>
+    );
+  },
+  
+  taskView: function() {
     var title       = this.props.task.title;
     var task_path   = `/tasks/${this.props.task.id}`;
     var description = this.props.task.description || "";
@@ -134,14 +214,14 @@ var Task = React.createClass({
                         checked   = {checked} 
                         onChange  = {this.handleCheck} />
               </div>                              
-              
+        
               <div className="task-fields">
                 <div className="title">                  
                   <h4> 
                     <a href={task_path}> {title} </a>
                   </h4>
                 </div>
-    
+
                 <div className="description">
                   <p> {description} </p>
                 </div>
@@ -149,13 +229,30 @@ var Task = React.createClass({
                 <div className="due">
                   <p> {due_date} </p>
                 </div>
-
+          
+                <div className="action-icons">
+                  <a href="#" className="btn btn-default" onClick={this.handleToggle}>Edit</a> 
+                </div>
+                  
               </div>  
             </div> {/* end of task-card */}
           </div>
         </div>
       </li>
     );
+  },
+  
+  render: function() {
+    var task_view;
+    
+    if(this.state.edit) {
+      task_view = this.taskForm();
+    }
+    else {
+      task_view = this.taskView();
+    }
+              
+    return task_view;
   }
 });
 
