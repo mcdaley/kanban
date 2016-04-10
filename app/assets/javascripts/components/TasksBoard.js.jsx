@@ -286,7 +286,7 @@ var Task = React.createClass({
 var TaskForm = React.createClass({
   
   getInitialState: function() {
-    return { title: '', description: '', due: ''}
+    return { title: '', description: '', due_text: ''}
   },
   
   handleChange: function(event) {
@@ -298,8 +298,8 @@ var TaskForm = React.createClass({
     else if(name == "description") {
       this.setState( { description: event.target.value } );
     }
-    else {  // name = due
-      this.setState( { due:         event.target.value } );
+    else {  // name = due_text
+      this.setState( { due_text:    event.target.value } );
     }
   },
   
@@ -367,13 +367,13 @@ var TaskForm = React.createClass({
                 <label>   Due </label>
                 <input    type          = 'text'   
                           className     = 'form-control' 
-                          name          = 'due'    
+                          name          = 'due_text'    
                           placeholder   = "Enter due date"
-                          value         = {this.state.due}
-                          onChange      = {this.handleChange} />
+                          value         = { this.state.due_text }
+                          onChange      = { this.handleChange   } />
               </div>
                     
-              <button className="btn btn-primary" type="submit" >              Update </button>
+              <button className="btn btn-primary" type="submit" >              Submit </button>
               <button className="btn btn-default" onClick={this.handleClear}>  Clear  </button>
             </form>
                       
