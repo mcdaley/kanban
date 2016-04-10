@@ -20,7 +20,7 @@ var TaskBoard = React.createClass({
   },
   
   updateTask: function(task, data) {
-    console.log('[TaskBoard]: handleEditRecord');
+    console.log('[TaskBoard]: updateTask');
     
     var index         = this.state.tasks.indexOf(task);
     var updated_task  = _.merge(  task,             data["task"]  );
@@ -30,6 +30,15 @@ var TaskBoard = React.createClass({
     this.replaceState({tasks: tasks});
   },
   
+  removeTask: function(task) {
+    console.log('[TaskBoard] removeTask')
+    var index   = this.state.tasks.indexOf(task);
+    var tasks   = _.map( this.state.tasks, _.clone );
+    tasks.splice(index, 1);
+    
+    this.replaceState( { tasks: tasks } );
+  },
+  
   render: function() {
     var title = this.props.title || "Hello World";
     
@@ -37,12 +46,13 @@ var TaskBoard = React.createClass({
       <div className="tasks-board">
         <div className="row">
           <div className="col-sm-12.col-md-12.col-lg-12">
-            <TaskHeader   title           = {title            } />
+            <TaskHeader   title             = { title            } />
       
-            <TaskList     tasks           = {this.state.tasks } 
-                          handleEditTask  = {this.updateTask  } />
+            <TaskList     tasks             = { this.state.tasks } 
+                          handleEditTask    = { this.updateTask  }
+                          handleDeleteTask  = { this.removeTask  } />
             
-            <TaskForm     handleNewTask   = {this.addTask     } />
+            <TaskForm     handleNewTask     = { this.addTask     } />
           </div>
         </div>
       </div>
@@ -78,9 +88,10 @@ var TaskList = React.createClass({
   render: function() {
     var rows = [];
     this.props.tasks.forEach(function(task) {
-      rows.push( <Task  task            = {task} 
-                        key             = {task.id}
-                        handleEditTask  = {this.props.handleEditTask} /> );
+      rows.push( <Task  task              = { task                        } 
+                        key               = { task.id                     }
+                        handleEditTask    = { this.props.handleEditTask   }
+                        handleDeleteTask  = { this.props.handleDeleteTask } /> );
     }.bind(this));
     
     return (
@@ -163,6 +174,20 @@ var Task = React.createClass({
     });
     
     return;
+  },
+  
+  handleDelete: function(e) {
+    console.log('[Task] handleDelete()');
+    e.preventDefault();
+    
+    $.ajax({
+      method:     "DELETE",
+      url:        `/tasks/${this.props.task.id}`,
+      dataType:   'JSON',
+      success:    function() { 
+        { this.props.handleDeleteTask(this.props.task) };
+      }.bind(this)
+    });
   },
   
   taskForm: function() {
@@ -248,7 +273,12 @@ var Task = React.createClass({
                 </div>
           
                 <div className="action-icons">
-                  <a href="#" className="btn btn-default" onClick={this.handleToggle}>Edit</a> 
+                  <a  href      = "#" 
+                      className = "btn btn-default" 
+                      onClick   = { this.handleToggle }> Edit   </a>
+                  <a  href      = "#" 
+                      className = "btn btn-default" 
+                      onClick   = { this.handleDelete }> Delete </a> 
                 </div>
                   
               </div>  
