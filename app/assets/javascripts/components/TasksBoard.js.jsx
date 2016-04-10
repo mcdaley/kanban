@@ -12,6 +12,13 @@ var TasksBoard = React.createClass({
     this.setState( { tasks: this.props.data } );
   },
   
+  addTask: function(task) {
+    console.log('[TaskBoard] addTask()');
+    var tasks  = _.map(    this.state.tasks, _.clone       );
+    tasks.push(task);
+    this.setState( { tasks: tasks } );
+  },
+  
   updateTask: function(task, data) {
     console.log('[TasksBoard]: handleEditRecord');
     
@@ -30,9 +37,12 @@ var TasksBoard = React.createClass({
       <div className="tasks-board">
         <div className="row">
           <div className="col-sm-12.col-md-12.col-lg-12">
-            <TasksHeader  title           = {title}             />
-            <TasksList    tasks           = {this.state.tasks} 
-                          handleEditTask  = {this.updateTask}  />
+            <TasksHeader  title           = {title            } />
+      
+            <TasksList    tasks           = {this.state.tasks } 
+                          handleEditTask  = {this.updateTask  } />
+            
+            <TaskForm     handleNewTask   = {this.addTask     } />
           </div>
         </div>
       </div>
@@ -41,6 +51,9 @@ var TasksBoard = React.createClass({
 
 });
 
+//-----------------------------------------------------------------------------
+// TaskBoardHeader
+//-----------------------------------------------------------------------------
 var TasksHeader = React.createClass({
   
   render: function() {
@@ -57,6 +70,9 @@ var TasksHeader = React.createClass({
   
 });
 
+//-----------------------------------------------------------------------------
+// TaskList
+//-----------------------------------------------------------------------------
 var TasksList = React.createClass({
   
   render: function() {
@@ -68,17 +84,18 @@ var TasksList = React.createClass({
     }.bind(this));
     
     return (
-      <div className="row">
-        <div className="col-sm-8 col-md-8 col-lg-8">
-          <ul className="list-group  task-list-group">
-            {rows}
-          </ul>
-        </div>
+      <div className="col-sm-8 col-md-8 col-lg-8">
+        <ul className="list-group  task-list-group">
+          {rows}
+        </ul>
       </div>
     );
   }
 });
 
+//-----------------------------------------------------------------------------
+// Task
+//-----------------------------------------------------------------------------
 var Task = React.createClass({
   
   getInitialState: function() {
@@ -157,31 +174,31 @@ var Task = React.createClass({
             <form onSubmit={this.handleEdit}>
       
               <div className='form-group'>
-                <label> Title </label>
-                <input  type          = 'text'   
-                        className     = 'form-control' 
-                        name          = 'title'  
-                        defaultValue  = {this.props.task.title} 
-                        autoFocus     = 'true'
-                        ref           = 'title' />
+                <label>   Title </label>
+                <input    type          = 'text'   
+                          className     = 'form-control' 
+                          name          = 'title'  
+                          defaultValue  = {this.props.task.title} 
+                          autoFocus     = 'true'
+                          ref           = 'title' />
               </div>
           
               <div className='form-group'>
-                <label> Description </label>
-                <input  type          = 'text'         
-                        className     = 'form-control' 
-                        name          = 'description'  
-                        defaultValue  = {this.props.task.description} 
-                        ref           = 'description' />
+                <label>   Description </label>
+                <textarea type          = 'text'         
+                          className     = 'form-control' 
+                          name          = 'description'  
+                          defaultValue  = {this.props.task.description} 
+                          ref           = 'description' />
               </div>
                         
               <div className='form-group'>
-                <label> Due </label>
-                <input  type          = 'text'   
-                        className     = 'form-control' 
-                        name          = 'due'    
-                        defaultValue  = {formatDateString(this.props.task.due)}
-                        ref           = 'due' />
+                <label>   Due </label>
+                <input    type          = 'text'   
+                          className     = 'form-control' 
+                          name          = 'due'    
+                          defaultValue  = {formatDateString(this.props.task.due)}
+                          ref           = 'due' />
               </div>
                     
               <button className="btn btn-primary" type="submit" >              Update </button>
@@ -253,6 +270,134 @@ var Task = React.createClass({
     }
               
     return task_view;
+  }
+});
+
+//-----------------------------------------------------------------------------
+// TODO: 04/09/2016
+// - CREATE A TASK WRAPPER CLASS TO HOLD THE TaskForm OBJECT, AND THAT WAY
+//   I SHOULD BE ABLE TO REFACTOR THE TASKFORM IN THE Task OBJECT, SO THAT
+//   I CAN KEEP IT DRY.
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+// TaskForm
+//-----------------------------------------------------------------------------
+var TaskForm = React.createClass({
+  
+  getInitialState: function() {
+    return { title: '', description: '', due: ''}
+  },
+  
+  handleChange: function(event) {
+    var name = event.target.name;
+    
+    if(name == "title") {
+      this.setState( { title:       event.target.value } );
+    }
+    else if(name == "description") {
+      this.setState( { description: event.target.value } );
+    }
+    else {  // name = due
+      this.setState( { due:         event.target.value } );
+    }
+  },
+  
+  handleSubmit: function(e) {
+    console.log('[TaskForm] handleSubmit()');
+    
+    e.preventDefault();
+    $.ajax({
+      type:     "POST",
+      url:      "/tasks/",
+      data:     { task: this.state },
+      success:  function(data) { 
+        console.log("post success, data= " + data);
+        this.props.handleNewTask( data["task"]            );
+        this.setState(            this.getInitialState()  );
+      }.bind(this),
+      dataType: 'JSON'
+    });
+  },
+  
+  handleClear: function(e) {
+    this.setState( this.getInitialState()  );
+  },
+  
+  //---------------------------------------------------------------------------
+  // TODO: 04/09/2016
+  // - NEED TO FIGURE OUT HOW THE valid FUNCTION WORKS!
+  //---------------------------------------------------------------------------
+  valid: function() {
+    console.log('[TaskForm] validate()');
+    this.state.title;
+  },
+  
+  taskForm: function() {
+    console.log('[TaskForm] render()');
+    
+    return (
+      <li className="list-group-item">
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-lg-12">
+            
+            <form onSubmit={this.handleSubmit}>
+      
+              <div className='form-group'>
+                <label>   Title </label>
+                <input    type          = 'text'   
+                          className     = 'form-control' 
+                          name          = 'title'  
+                          placeholder   = 'Enter task'
+                          value         = {this.state.title}
+                          onChange      = {this.handleChange} />
+              </div>
+          
+              <div className='form-group'>
+                <label>   Description </label>
+                <textarea type          = 'text'         
+                          className     = 'form-control' 
+                          name          = 'description'  
+                          placeholder   = 'Enter task description'
+                          value         = {this.state.description}
+                          onChange      = {this.handleChange} />
+              </div>
+                        
+              <div className='form-group'>
+                <label>   Due </label>
+                <input    type          = 'text'   
+                          className     = 'form-control' 
+                          name          = 'due'    
+                          placeholder   = "Enter due date"
+                          value         = {this.state.due}
+                          onChange      = {this.handleChange} />
+              </div>
+                    
+              <button className="btn btn-primary" type="submit" >              Update </button>
+              <button className="btn btn-default" onClick={this.handleClear}>  Clear  </button>
+            </form>
+                      
+          </div>
+        </div>
+      </li>
+    );
+  },
+  
+  render: function() {
+    taskForm = this.taskForm();
+    
+    return(
+      <div className="col-sm-4 col-md-4 col-lg-4">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h4> Add Task </h4>
+          </div>
+          <div className="panel-body">
+            {taskForm}
+          </div>
+        </div>
+      </div>
+    );
   }
 });
 
