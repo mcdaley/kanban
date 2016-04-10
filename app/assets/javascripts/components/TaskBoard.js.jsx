@@ -1,8 +1,8 @@
 /******************************************************************************
- * File: assets/javascripts/components/TasksBoard.js.jsx
+ * File: assets/javascripts/components/TaskBoard.js.jsx
  ******************************************************************************/
 
-var TasksBoard = React.createClass({
+var TaskBoard = React.createClass({
 
   getInitialState: function() {
     return { tasks: [] };
@@ -20,7 +20,7 @@ var TasksBoard = React.createClass({
   },
   
   updateTask: function(task, data) {
-    console.log('[TasksBoard]: handleEditRecord');
+    console.log('[TaskBoard]: handleEditRecord');
     
     var index         = this.state.tasks.indexOf(task);
     var updated_task  = _.merge(  task,             data["task"]  );
@@ -37,9 +37,9 @@ var TasksBoard = React.createClass({
       <div className="tasks-board">
         <div className="row">
           <div className="col-sm-12.col-md-12.col-lg-12">
-            <TasksHeader  title           = {title            } />
+            <TaskHeader   title           = {title            } />
       
-            <TasksList    tasks           = {this.state.tasks } 
+            <TaskList     tasks           = {this.state.tasks } 
                           handleEditTask  = {this.updateTask  } />
             
             <TaskForm     handleNewTask   = {this.addTask     } />
@@ -54,7 +54,7 @@ var TasksBoard = React.createClass({
 //-----------------------------------------------------------------------------
 // TaskBoardHeader
 //-----------------------------------------------------------------------------
-var TasksHeader = React.createClass({
+var TaskHeader = React.createClass({
   
   render: function() {
     var label = this.props.title;
@@ -73,7 +73,7 @@ var TasksHeader = React.createClass({
 //-----------------------------------------------------------------------------
 // TaskList
 //-----------------------------------------------------------------------------
-var TasksList = React.createClass({
+var TaskList = React.createClass({
   
   render: function() {
     var rows = [];
