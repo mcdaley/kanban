@@ -1,0 +1,24 @@
+/******************************************************************************
+ * assets/stylesheets/forms.scss
+ ******************************************************************************/
+
+//-----------------------------------------------------------------------------
+// Import the CareerQB Global Styles and Bootstrap Customizations
+//-----------------------------------------------------------------------------
+@import "global_styles";
+@import "bootstrap_and_overrides";
+
+//----------------------------------------------------------------------------- 
+// Form specific styles
+//-----------------------------------------------------------------------------
+
+.has-error > input {
+  color:                    $state-danger-text;
+  background-color:         $state-danger-bg;
+}
+
+.error-msg {
+  color:                    $state-danger-text;
+  font-decoration:          italic;
+}
+
