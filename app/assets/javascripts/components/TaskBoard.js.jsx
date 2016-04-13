@@ -95,23 +95,29 @@ var TaskBoard = React.createClass({
     return ( 
       <div className="tasks-board">
         <div className="row">
-          <div className="col-sm-12.col-md-12.col-lg-12">
+          <div className="col-sm-12 col-md-12 col-lg-12">
             <TaskHeader   title             = { title            } />
-      
-            <TaskList     tasks             = { this.state.incomplete_tasks }
-                          handleCheckTask   = { this.checkTask   }
-                          handleEditTask    = { this.updateTask  }
-                          handleDeleteTask  = { this.removeTask  } />
+        
+            <div className="row">
+              <div className="col-sm-7 col-md-7 col-lg-7">
+                <TaskList     tasks             = { this.state.incomplete_tasks }
+                              handleCheckTask   = { this.checkTask   }
+                              handleEditTask    = { this.updateTask  }
+                              handleDeleteTask  = { this.removeTask  } />
                           
-            <TaskHeader   title             = { "Completed Tasks" } />
+                <TaskHeader   title             = { "Completed Tasks" } />
             
-            <TaskList     tasks             = { this.state.completed_tasks } 
-                          handleCheckTask   = { this.checkTask   }
-                          handleEditTask    = { this.updateTask  }
-                          handleDeleteTask  = { this.removeTask  } />
-                          
-            
-            <TaskForm     handleNewTask     = { this.addTask     } />
+                <TaskList     tasks             = { this.state.completed_tasks } 
+                              handleCheckTask   = { this.checkTask   }
+                              handleEditTask    = { this.updateTask  }
+                              handleDeleteTask  = { this.removeTask  } />
+              </div>
+                    
+              <div className="col-sm-5 col-md-5 col-lg-5">      
+                <TaskForm     handleNewTask     = { this.addTask     } />
+              </div>
+            </div>
+                              
           </div>
         </div>
       </div>
@@ -155,7 +161,7 @@ var TaskList = React.createClass({
     }.bind(this));
     
     return (
-      <div className="col-sm-8 col-md-8 col-lg-8">
+      <div className="col-sm-12 col-md-12 col-lg-12">
         <ul className="list-group  task-list-group">
           {rows}
         </ul>
@@ -305,7 +311,7 @@ var Task = React.createClass({
     var checked     = this.props.task.complete == true ? true : false;
     
     return (
-      <li className="list-group-item">
+      <li className={ checked ? "list-group-item completed-task-li" : "list-group-item"}>
         <div className="row">
           <div className="col-sm-12 col-md-12 col-lg-12">
             <div className="task-card">
@@ -507,7 +513,7 @@ var TaskForm = React.createClass({
     taskForm = this.taskForm();
     
     return(
-      <div className="col-sm-4 col-md-4 col-lg-4">
+      <div className="col-sm-12 col-md-12 col-lg-12">
         <div className="panel panel-default">
           <div className="panel-heading">
             <h4> Add Task </h4>
