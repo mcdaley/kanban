@@ -5,38 +5,88 @@
 var TaskBoard = React.createClass({
 
   getInitialState: function() {
-    return { tasks: [] };
+    return { incomplete_tasks: [], completed_tasks: [], tasks: [] };
   },
   
   componentWillMount: function() {
-    this.setState( { tasks: this.props.data } );
+    var tasks             = _.map( this.props.data,  _.clone );
+    var incomplete_tasks  = _.remove(tasks, function(task) {
+      return task.complete == false;
+    });
+    
+    var completed_tasks   = _.remove(tasks, function(task) {
+      return task.complete == true;
+    });
+    
+    this.setState( { incomplete_tasks:  incomplete_tasks,
+                     completed_tasks:   completed_tasks    } );
+  },
+  
+  getTaskList: function(task) {
+    var     task_list = task.complete == true ? "completed_tasks" : "incomplete_tasks";
+    return  task_list;
   },
   
   addTask: function(task) {
     console.log('[TaskBoard] addTask()');
-    var tasks  = _.map(    this.state.tasks, _.clone       );
-    tasks.push(task);
-    this.setState( { tasks: tasks } );
+    var incomplete_tasks  = _.map( this.state.incomplete_tasks, _.clone );
+    incomplete_tasks.push(task);
+    this.setState( { incomplete_tasks: incomplete_tasks } );
+  },
+  
+  /**
+   * Handle when a user checks a task
+   * - Remove task from source TaskList
+   * - Add the task to the destination TaskList
+   * - Add the "checkTask" as a property to TaskList and Tasks and change
+   *   the event handler to call the checkTask() instead of updateTask()
+   */
+  checkTask: function(task, data) {
+    console.log('[TaskBoard]: checkTask');
+    var task_lists        = {};
+    var source_list       = this.getTaskList(task);
+    var target_list       = source_list == "incomplete_tasks" ? "completed_tasks" : "incomplete_tasks";
+    
+    var index             = this.state[source_list].indexOf(task);
+    var source_tasks      = _.map( this.state[source_list], _.clone );
+    var target_tasks      = _.map( this.state[target_list], _.clone );
+    var source_task       = _.pullAt(source_tasks, [index])[0];
+    var updated_task      = _.merge(source_task, data["task"]);
+    target_tasks.push(updated_task);
+    
+    task_lists[source_list] = source_tasks;
+    task_lists[target_list] = target_tasks;
+    
+    this.setState( task_lists );
   },
   
   updateTask: function(task, data) {
     console.log('[TaskBoard]: updateTask');
+    var state         = {}
+    var task_list     = this.getTaskList(task);
     
-    var index         = this.state.tasks.indexOf(task);
+    var index         = this.state[task_list].indexOf(task);
     var updated_task  = _.merge(  task,             data["task"]  );
-    var tasks         = _.map(    this.state.tasks, _.clone       );
+    var tasks         = _.map(    this.state[task_list], _.clone  );
     tasks[index]      = updated_task
+    state[task_list]  = tasks;
+
+    this.setState( state );
     
-    this.replaceState({tasks: tasks});
+    return;
   },
   
   removeTask: function(task) {
     console.log('[TaskBoard] removeTask')
-    var index   = this.state.tasks.indexOf(task);
-    var tasks   = _.map( this.state.tasks, _.clone );
-    tasks.splice(index, 1);
+    var state         = {};
+    var task_list     = this.getTaskList(task);
     
-    this.replaceState( { tasks: tasks } );
+    var index         = this.state[task_list].indexOf(task);
+    var tasks         = _.map( this.state[task_list], _.clone );    
+    tasks.splice(index, 1);
+
+    state[task_list]  = tasks;    
+    this.setState( state );
   },
   
   render: function() {
@@ -48,9 +98,18 @@ var TaskBoard = React.createClass({
           <div className="col-sm-12.col-md-12.col-lg-12">
             <TaskHeader   title             = { title            } />
       
-            <TaskList     tasks             = { this.state.tasks } 
+            <TaskList     tasks             = { this.state.incomplete_tasks }
+                          handleCheckTask   = { this.checkTask   }
                           handleEditTask    = { this.updateTask  }
                           handleDeleteTask  = { this.removeTask  } />
+                          
+            <TaskHeader   title             = { "Completed Tasks" } />
+            
+            <TaskList     tasks             = { this.state.completed_tasks } 
+                          handleCheckTask   = { this.checkTask   }
+                          handleEditTask    = { this.updateTask  }
+                          handleDeleteTask  = { this.removeTask  } />
+                          
             
             <TaskForm     handleNewTask     = { this.addTask     } />
           </div>
@@ -90,6 +149,7 @@ var TaskList = React.createClass({
     this.props.tasks.forEach(function(task) {
       rows.push( <Task  task              = { task                        } 
                         key               = { task.id                     }
+                        handleCheckTask   = { this.props.handleCheckTask  }
                         handleEditTask    = { this.props.handleEditTask   }
                         handleDeleteTask  = { this.props.handleDeleteTask } /> );
     }.bind(this));
@@ -141,7 +201,7 @@ var Task = React.createClass({
       dataType:   "JSON",
       data:       { task: data },
       success:    function(data) {
-        {this.props.handleEditTask( this.props.task, data)};
+        {this.props.handleCheckTask( this.props.task, data)};
       }.bind(this)
     });
   },
