@@ -139,16 +139,15 @@ var Task = React.createClass({
                           defaultValue  = {this.props.task.description} 
                           ref           = 'description' />
               </div>
-                        
+
               <div className='form-group'>
-                <label>   Due </label>
-                <input    type          = 'text'   
-                          className     = 'form-control' 
-                          name          = 'due'    
-                          defaultValue  = {formatDateString(this.props.task.due)}
-                          ref           = 'due' />
+                <label>     Due </label>
+                <DatePicker name          = 'due_text'
+                            placeholder   = 'mm/dd/yyyy'
+                            defaultValue  = {formatDateString(this.props.task.due)}
+                            ref           = 'due' />
               </div>
-                    
+                          
               <button className="btn btn-primary" type="submit" >              Update </button>
               <button className="btn btn-default" onClick={this.handleToggle}> Cancel </button>
             </form>
@@ -226,12 +225,6 @@ var Task = React.createClass({
   }
 });
 
-//-----------------------------------------------------------------------------
-// TODO: 04/09/2016
-// - CREATE A TASK WRAPPER CLASS TO HOLD THE TaskForm OBJECT, AND THAT WAY
-//   I SHOULD BE ABLE TO REFACTOR THE TASKFORM IN THE Task OBJECT, SO THAT
-//   I CAN KEEP IT DRY.
-//-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
 // TaskForm
@@ -342,17 +335,20 @@ var TaskForm = React.createClass({
                         value         = {this.state.description}
                         onChange      = {this.handleChange} />
             </div>
-                      
+                        
             <div className='form-group'>
-              <label>   Due </label>
-              <input    type          = 'text'   
-                        className     = 'form-control' 
-                        name          = 'due_text'    
-                        placeholder   = "Enter due date"
-                        value         = { this.state.due_text }
-                        onChange      = { this.handleChange   } />
+              <div className={ this.hasError('due_text') ? 'form-group has-error' : 'form-group'}>
+                <label>     Due </label>
+                <DatePicker name          = 'due_text'
+                            placeholder   = 'mm/dd/yyyy'
+                            value         = { this.state.due_text }
+                            handleChange  = { this.handleChange   } />
+                <span className={this.hasError('due_text') ? 'error-msg' : 'hidden'}> 
+                  { this.hasError('due_text') ? this.state.errors['due_text'][0] : '' } 
+                </span>
+              </div>
             </div>
-                  
+                        
             <button type      = "submit" 
                     className = "btn btn-primary" 
                     onClick   = {this.handleSubmit} > Submit  </button>

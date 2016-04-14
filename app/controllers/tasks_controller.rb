@@ -77,6 +77,7 @@ class TasksController < ApplicationController
         format.json { render      json: @task, status: :created }
       end
     else
+      logger.log_error_messages(@task, "TASKS")
       respond_to do |format|
         format.html { render      'new'                                             }
         format.json { render      json: @task.errors, status: :unprocessable_entity }

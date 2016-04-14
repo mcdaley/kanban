@@ -53,17 +53,18 @@ class Task < ActiveRecord::Base
     if @due_text.present?
       begin
         self.due = Date.strptime(@due_text, "%m/%d/%Y")
-        logger.debug "Set task due date=[#{self.due.inspect}]"
+        #self.due = @due_text.to_datetime
+        #logger.debug "TASKS: Set task due date=[#{self.due.inspect}]"
       rescue ArgumentError => e
-        logger.error "Failed to parse date string=[#{@due_text}]"
-        logger.error "#{e.message}"
-        logger.error "#{e.backtrace.inspect}"
+        logger.error "TASKS: Failed to parse date string=[#{@due_text}]"
+        logger.error "TASKS: #{e.message}"
+        logger.error "TASKS: #{e.backtrace.inspect}"
 
         errors.add :due_text, "failed to parse #{@due_text}"
       rescue TypeError => e
-        logger.error "Failed to parse date string=[#{@due_text}]"
-        logger.error "#{e.message}"
-        logger.error "#{e.backtrace.inspect}"
+        logger.error "TASKS: Failed to parse date string=[#{@due_text}]"
+        logger.error "TASKS: #{e.message}"
+        logger.error "TASKS: #{e.backtrace.inspect}"
 
         errors.add :due_text, "failed to parse #{@due_text}"
       end
@@ -76,6 +77,7 @@ class Task < ActiveRecord::Base
   #
   def save_due_text
     self.due = Date.strptime(@due_text, "%m/%d/%Y") if @due_text.present?
+    ##self.due = @due_text.to_datetime if @due_text.present?
   end
   
 end
