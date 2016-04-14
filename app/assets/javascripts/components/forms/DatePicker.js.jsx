@@ -7,6 +7,13 @@ var DatePicker = React.createClass({
    * Set up the jQuery datepicker after the component mounts. Delegate the
    * onChange event to the React handleChange event, so the UI is notified
    * when a user changes the date through the jQuery datepicker widget.
+   *
+   * ==== Properties
+   * * ?name?         - 
+   * * ?value?        - 
+   * * ?defaultValue? -
+   * * ?placeholder?  - 
+   * * ?onChange?     - 
    */
   componentDidMount: function() {
     $(ReactDOM.findDOMNode( this.refs.datepicker )).datepicker().on("change", function(e) {

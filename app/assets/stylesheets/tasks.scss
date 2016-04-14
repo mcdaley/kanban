@@ -21,7 +21,14 @@
   }
   
   .completed-task-li {
-    color:                    red;
+    h4 {
+      font-style:             italic;
+      text-decoration:        line-through;
+    }
+    color:                    $grayed-out;
+    p {
+      text-decoration:        line-through;
+    }
   }
 }
 
