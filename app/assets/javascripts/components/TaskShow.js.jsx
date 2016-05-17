@@ -26,6 +26,20 @@ var TaskShow = React.createClass({
       <div className="task-show">
         <div className="row">
           <div className="col-sm-12 col-md-12 col-lg-12">
+            <TaskHeader   title = "Task Long Form" />
+          </div>
+        </div>
+      
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-lg-12">
+            <TaskLongForm   task            = { this.state.task     }
+                            key             = { this.state.task.id  }
+                            handleEditTask  = { this.updateTask     } />
+          </div>
+        </div>
+      
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-lg-12">
             <TaskHeader   title = { title } />
           </div>
         </div>
