@@ -15,6 +15,7 @@
 
 class Task < ActiveRecord::Base
   belongs_to    :user
+  has_many      :comments,  as:         :commentable
   
   attr_writer   :due_text 
   
@@ -29,8 +30,8 @@ class Task < ActiveRecord::Base
   #----------------------------------------------------------------------------
   # Scopes
   #----------------------------------------------------------------------------
-  scope         :incomplete,  -> { where(complete:  false).order( due: :asc ) }
-  scope         :complete,    -> { where(complete:  true).order(  due: :asc ) }
+  scope         :incomplete,  -> { where( complete: false ).order( due: :asc ) }
+  scope         :complete,    -> { where( complete: true  ).order( due: :asc ) }
   scope         :todos,       -> { order( complete: :asc, due: :asc ) }
   
   #----------------------------------------------------------------------------

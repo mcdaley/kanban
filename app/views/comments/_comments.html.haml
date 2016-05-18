@@ -1,0 +1,7 @@
+-# ----------------------------------------------------------------------------
+-# app/views/comments/_comments.html.haml
+-# ----------------------------------------------------------------------------
+%h3 Comments
+- commentable.comments.each do |comment|
+  %div.well
+    = comment.body

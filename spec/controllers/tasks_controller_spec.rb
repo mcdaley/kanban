@@ -39,16 +39,36 @@ RSpec.describe TasksController, type: :controller do
   
   describe 'GET #show' do
     context 'respond_to JSON' do
-      before { sign_in user_with_tasks }
       
-      it "assigns the task as @task" do
-        task = user_with_tasks.tasks.todos[0]
+      describe 'tasks w/o comments' do
+        before { sign_in user_with_tasks }
+      
+        it "assigns the task as @task" do
+          task = user_with_tasks.tasks.todos[0]
         
-        get :show, { id: task.id, format: :json }
-        expect(assigns(:task)).to eq(task)
-      end
-    end # end of context 'respond_to JSON'
-    
+          get :show, { id: task.id, format: :json }
+          expect(assigns(:task)).to eq(task)
+        end
+      end # end of 'describe task w/o comments'
+      
+      describe 'tasks w/ comments' do
+        let(:user_with_tasks_with_comments) { 
+          FactoryGirl.create(:user_with_tasks_with_comments) 
+        }
+        
+        before { sign_in user_with_tasks_with_comments }
+        
+        it "assigns the comments as @comments" do
+          tasks     = user_with_tasks_with_comments.tasks.todos
+          task      = tasks.first
+          comments  = task.comments.all
+          
+          get :show, { id: task.id, format: :json }
+          expect(assigns(:comments)).to eq(comments)
+        end
+      end # end of describe 'tasks /w comments'
+      
+    end # end of context 'respond_to JSON' 
   end # end of describe 'GET #show'
   
   describe 'GET #new' do

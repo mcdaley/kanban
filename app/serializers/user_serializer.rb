@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# serializers/task_serializer.rb
+# app/serializers/user_serializer.rb
 #------------------------------------------------------------------------------
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :email, :name

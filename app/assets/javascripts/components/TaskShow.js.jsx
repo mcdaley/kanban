@@ -37,7 +37,7 @@ var TaskShow = React.createClass({
                             handleEditTask  = { this.updateTask     } />
           </div>
         </div>
-      
+{/**
         <div className="row">
           <div className="col-sm-12 col-md-12 col-lg-12">
             <TaskHeader   title = { title } />
@@ -52,6 +52,7 @@ var TaskShow = React.createClass({
                   handleEditTask  = { this.updateTask     } />
           </div>
         </div>
+**/}
       </div>
     );
   }

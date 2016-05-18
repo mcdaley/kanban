@@ -48,6 +48,15 @@ FactoryGirl.define do
         FactoryGirl.create( :incomplete_due_5_days_ago ,      user: user )
       end
     end
+    
+    factory :user_with_tasks_with_comments, :parent => :user do
+      name                  "Bruce Smith"
+      email                 "bruce@bills.com"
+      
+      after(:create) do |user|
+        FactoryGirl.create( :task_with_comments,              user: user )
+      end
+    end
         
   end # end of factory :uncomfirmed_user
   
@@ -129,7 +138,41 @@ FactoryGirl.define do
       description                 "Incomplete task and due 5 days ago"
       due_text                    (Date.today - 5).strftime('%m/%d/%Y')
       complete                    false
-    end    
+    end
+    
+    factory :task_with_comments do
+      title                       "Task with comments"
+      description                 "Incomplete task with comments"
+      due_text                    (Date.today - 5).strftime('%m/%d/%Y')
+      complete                    false
+      
+      after(:create) do |task|
+        FactoryGirl.create(:comment_today,       commentable: task, user: task.user)
+        FactoryGirl.create(:comment_3_days_ago,  commentable: task, user: task.user)
+      end
+    end
+    
   end # end of factory :task
+  
+  #----------------------------------------------------------------------------
+  # Comments
+  #----------------------------------------------------------------------------
+  factory :comment do |f|
+    f.body                        "First comment"
+    association :user,            factory: :user
+    association :commentable,     factory: :task
+    
+    factory :comment_today do
+      body                        "Comment today"
+    end
+    
+    factory :comment_3_days_ago do
+      body                        "Comment 3 days ago"
+    end
+    
+    factory :comment_5_days_ago do
+      body                        "Comment 5 days ago"
+    end
+  end # end of factory :comment
 
 end # end of FactoryGirl.define

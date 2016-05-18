@@ -6,8 +6,9 @@ class TasksController < ApplicationController
   def show
     logger.debug_params(params, "TASKS")
     
-    @user   = current_user
-    @task   = @user.tasks.find(params[:id])
+    @user     = current_user
+    @task     = @user.tasks.find(params[:id])
+    @comments = @task.comments
     
     respond_to do |format|
       format.html
