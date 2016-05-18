@@ -2,11 +2,14 @@
 -# app/views/tasks/show.html.haml
 -# ----------------------------------------------------------------------------
 %div.tasks-container
-  = react_component( 'TaskShow', { data: @task, title: "Task Show" } )
+  = react_component( 'TaskShow', { data: @task, comments: @comments, title: "Task Show" } )
   
-  %div.row
-    %div.col-12-sm.col-12-md.col-12-lg
-      = render partial: 'comments/comments',  locals: { commentable: @task }
-      = render partial: 'comments/form',      locals: { commentable: @task }
+  -# ----------------------------------------------------------------
+  -# 05/18/2016 - COMMENTED OUT
+  -# ----------------------------------------------------------------
+      %div.row
+        %div.col-12-sm.col-12-md.col-12-lg
+          = render partial: 'comments/comments',  locals: { commentable: @task }
+          = render partial: 'comments/form',      locals: { commentable: @task }
       
       

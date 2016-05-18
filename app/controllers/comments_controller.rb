@@ -11,6 +11,10 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     
     if @comment.save
+      logger.debug( "COMMENTS: Saved comment id=[#{@comment.id}], " +         
+                    "commentable_type=[#{@commentable.class}], "    +
+                    "commentable_id=[#{@commentable.id}], body=[#{@comment.body}]" )
+      
       respond_to do |format|
         format.html {
           redirect_to   @commentable,   notice: "Your comment was successfully posted."

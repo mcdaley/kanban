@@ -94,7 +94,7 @@ var TaskBoard = React.createClass({
       <div className="tasks-board">
         <div className="row">
           <div className="col-sm-12 col-md-12 col-lg-12">
-            <TaskHeader   title             = { title            } />
+            <TaskHeader       title             = { title            } />
         
             <div className="row">
               <div className="col-sm-7 col-md-7 col-lg-7">

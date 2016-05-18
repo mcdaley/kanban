@@ -139,7 +139,7 @@ var TaskForm = React.createClass({
   },
   
   render: function() {
-    taskForm = this.taskForm();
+    var taskForm = this.taskForm();
     
     return(
       <div className="col-sm-12 col-md-12 col-lg-12">
