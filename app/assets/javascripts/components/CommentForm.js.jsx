@@ -55,6 +55,11 @@ var CommentForm = React.createClass({
     });
   },
   
+  handleClear: function(e) {
+    console.log('[CommentForm]: handleClear()');
+    this.setState( this.getInitialState() );
+  },
+  
   commentForm: function() {
     console.log('[CommentForm] render()');
     
@@ -76,6 +81,9 @@ var CommentForm = React.createClass({
             <button type      = "submit" 
                     className = "btn btn-primary" 
                     onClick   = {this.handleSubmit} > Add Comment  </button>
+            <button className = "btn btn-default"
+                    onClick   = {this.handleClear}  > Clear        </button>
+                        
           </form>
                     
         </div>
