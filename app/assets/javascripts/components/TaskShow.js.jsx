@@ -58,24 +58,7 @@ var TaskShow = React.createClass({
                             handleNewComment  = { this.addComment     } />
           </div>
                             
-        </div>
-                            
-{/**
-        <div className="row">
-          <div className="col-sm-12 col-md-12 col-lg-12">
-            <TaskHeader   title = { title } />
-          </div>
-        </div>
-      
-        <div className="row">
-          <div className="col-sm-12 col-md-12 col-lg-12">
-            <Task task            = { this.state.task     }
-                  key             = { this.state.task.id  }
-                  handleCheckTask = { this.updateTask     }
-                  handleEditTask  = { this.updateTask     } />
-          </div>
-        </div>
-**/}
+        </div>                                                        
       </div>
     );
   }
