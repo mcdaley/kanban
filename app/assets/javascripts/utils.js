@@ -16,7 +16,7 @@ function formatDateString(date) {
   var date_str;
   
   if(date == null) {
-    date_str = '-';
+    date_str = '';
   }
   else {
     date_str = new Date(date).toLocaleDateString();
