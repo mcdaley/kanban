@@ -15,6 +15,25 @@ var TaskLongForm = React.createClass({
     return;
   },
   
+  handleCheck: function(event) {
+    event.preventDefault();
+    console.log("[TaskLongForm.handleCheck] Entered handleCheck()");
+  
+    var data = {
+      complete: !this.props.task.complete
+    }
+  
+    $.ajax({
+      method:     "PATCH",
+      url:        `/tasks/${this.props.task.id}`,
+      dataType:   "JSON",
+      data:       { task: data },
+      success:    function(data) {
+        {this.props.handleCheckTask( this.props.task, data)};
+      }.bind(this)
+    });
+  },
+  
   handleEdit: function(event) {
     console.log('[TaskLongForm]: handleEdit()');
     event.preventDefault();
@@ -45,6 +64,25 @@ var TaskLongForm = React.createClass({
    */
   taskView: function() {
     console.log('[TaskLongForm]: taskView()');
+    
+    // Display the checkbox
+    var task_checkbox;
+    if (this.props.task.complete == true) {
+      task_checkbox = (
+        <i  className = "fa fa-2x fa-check-circle-o complete-checkbox"
+            onClick   = {this.handleCheck}
+            style     = {{cursor: 'pointer'}} >
+        </i>
+      );
+    }
+    else {
+      task_checkbox = (
+          <i  className = "fa fa-2x fa-circle-o"
+              onClick   = {this.handleCheck}
+              style     = {{cursor: 'pointer'}} >
+          </i>
+      );
+    }    
     
     // Create the task description style
     var description;
@@ -98,10 +136,10 @@ var TaskLongForm = React.createClass({
           <div className="col-sm-12 col-md-12 col-lg-12">
             <div className="task-card-tmp">
               <div className="task-checkbox-tmp">
-                <i className="fa fa-2x fa-circle-o"></i>
+                {task_checkbox}
               </div>
               <div className="task-fields-tmp">
-                <div className="title">                  
+                <div className={ this.props.task.complete ? "title completed-title" : "title"}>                  
                   <h4> {this.props.task.title} </h4>
                 </div>
 
@@ -127,55 +165,60 @@ var TaskLongForm = React.createClass({
     console.log('[TaskLongForm]: taskForm()');
     
     return (
-      <div className="row">
-        <div className="col-sm-12 col-md-12 col-lg-12">
+      <div className="task-section-div">
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-lg-12">
           
-          <div className="task-long-form-div">
-            <form onSubmit={this.handleEdit}>
-              <div className="task-form-btns form-group">
-                <button className   = "btn btn-primary" 
-                        type        = "submit" >                Save  </button>
+            <div className="task-long-form-div">
+              <form onSubmit={this.handleEdit}>
+                <div className="task-form-btns form-group">
+                  <button className   = "btn btn-primary" 
+                          type        = "submit" >                Save  </button>
 
-                <button className   = "btn btn-default" 
-                        onClick     = { this.toggleEditMode } > Cancel </button>
-              </div>
+                  <button className   = "btn btn-default" 
+                          onClick     = { this.toggleEditMode } > Cancel </button>
+                </div>
           
-              <div className="task-title form-group">
-                <input    type          = 'text'   
-                          className     = 'form-control' 
-                          name          = 'title'  
-                          placeholder   = 'Enter task'
-                          defaultValue  = {this.props.task.title} 
-                          autoFocus     = 'true'
-                          ref           = 'title' />
-              </div>
+                <div className="task-title form-group">
+                  <label>   Title </label>
+                  <input    type          = 'text'   
+                            className     = 'form-control' 
+                            name          = 'title'  
+                            placeholder   = 'Enter task'
+                            defaultValue  = {this.props.task.title} 
+                            autoFocus     = 'true'
+                            ref           = 'title' />
+                </div>
                     
-              <div className="task-description form-group">
-                <textarea className     = 'form-control'
-                          name          = 'description'
-                          placeholder   = 'Entered detail task description'
-                          defaultValue  = {this.props.task.description} 
-                          ref           = 'description' />
+                <div className="task-description form-group">
+                  <label> Description </label>
+                  <textarea className     = 'form-control'
+                            name          = 'description'
+                            placeholder   = 'Entered detail task description'
+                            defaultValue  = {this.props.task.description} 
+                            ref           = 'description' />
                     
-              </div>
+                </div>
               
-              <div className="row">        
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <div className="task-due-date form-group">
-                    <DatePicker name          = 'due_text'
-                                placeholder   = 'mm/dd/yyyy'
-                                defaultValue  = {formatDateString(this.props.task.due)}
-                                ref           = 'due' />
+                <div className="row">        
+                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div className="task-due-date form-group">
+                      <label>     Due </label>
+                      <DatePicker name          = 'due_text'
+                                  placeholder   = 'mm/dd/yyyy'
+                                  defaultValue  = {formatDateString(this.props.task.due)}
+                                  ref           = 'due' />
+                    </div>
+                  </div>
+                              
+                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   </div>
                 </div>
                               
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                </div>
-              </div>
-                              
-            </form>
-          </div>
+              </form>
+            </div>
         
+          </div>
         </div>
       </div>
     );

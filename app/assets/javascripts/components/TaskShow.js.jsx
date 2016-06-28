@@ -1,5 +1,5 @@
 /******************************************************************************
- * File: assets/javascripts/components/TaskShow.js.jsx
+ * app/assets/javascripts/components/TaskShow.js.jsx
  ******************************************************************************/
 
 var TaskShow = React.createClass({
@@ -10,6 +10,14 @@ var TaskShow = React.createClass({
   componentWillMount: function() {
     this.setState( { task:      this.props.data,
                      comments:  this.props.comments } );
+  },
+  
+  checkTask: function(task, data) {
+    console.log('[TaskShow]: handleCheck()');
+    
+    this.setState( {task: data["task"]} );
+    
+    return;
   },
   
   updateTask: function(task, data) {
@@ -46,6 +54,7 @@ var TaskShow = React.createClass({
               <div className="col-sm-12 col-md-12 col-lg-12">
                 <TaskLongForm   task              = { this.state.task     }
                                 key               = { this.state.task.id  }
+                                handleCheckTask   = { this.checkTask      }
                                 handleEditTask    = { this.updateTask     } />
               </div>
             </div>

@@ -46,6 +46,10 @@ div.task-card-tmp {
     height:                   100%;
     vertical-align:           top;
     //margin:                   0.20em 0 0 0;
+    
+    .complete-checkbox {
+      color:                  $in-progress;
+    }
   }
   
   .task-fields-tmp {
@@ -54,13 +58,19 @@ div.task-card-tmp {
     max-width:                90%;
     min-width:                70%;
     margin:                   0;
-    
+        
     .title {
       h4 {
         font-size:            1.80em;
         margin-top:           0;
         padding-bottom:       0.25em;
         border-bottom:        1px solid $border;
+      }
+    }
+    
+    .completed-title {
+      h4 {
+        color:                $grayed-out
       }
     }
     
