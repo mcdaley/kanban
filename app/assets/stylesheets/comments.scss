@@ -1,3 +1,57 @@
-// Place all the styles related to the comments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/******************************************************************************
+ * assets/stylesheets/comments.scss
+ *
+ * Define the styles for the to dos
+ ******************************************************************************/
+
+//-----------------------------------------------------------------------------
+// Import the CareerQB Global Styles and Bootstrap Customizations
+//-----------------------------------------------------------------------------
+@import "global_styles";
+@import "bootstrap_and_overrides";
+
+.comments-container-div {
+  margin:                     0;
+  padding:                    0 0 0 2.0em;
+}
+
+.comment-title {
+  h4 {
+    margin:                   0;
+  }
+}
+
+ul.comment-list-group {
+  margin-bottom:              0.50em;
+  
+  li.list-group-item {
+    border:                   none;
+    margin-left:              0;
+    padding:                  0.50em 0 0.50em 0;
+  }
+  
+  .comment-meta-data {
+    color:                    $grayed-out;
+    font-size:                0.90em;
+    margin:                   0;
+    padding:                  0;
+  } 
+}
+
+.initials {
+  display:                    inline-block;
+  width:                      3.25em;
+  vertical-align:             top;
+}
+
+.comment-div {
+  display:                    inline-block;
+  max-width:                  90%;
+  min-width:                  80%;
+  
+  
+  p {
+    margin:                   0.10em 0 0 0;
+    font-size:                1.10em;
+  }
+}

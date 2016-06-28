@@ -101,6 +101,9 @@ GEM
     faker (1.6.3)
       i18n (~> 0.5)
     ffi (1.9.10)
+    fontawesome-rails (4.0.3.2)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -296,6 +299,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   faker
+  fontawesome-rails
   haml-rails
   html2haml
   hub

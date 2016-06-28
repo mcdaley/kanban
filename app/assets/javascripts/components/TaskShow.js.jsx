@@ -38,27 +38,29 @@ var TaskShow = React.createClass({
           </div>
         </div>
       
-        <div className="row">
-          <div className="col-sm-12 col-md-12 col-lg-12">
-            <TaskLongForm   task              = { this.state.task     }
-                            key               = { this.state.task.id  }
-                            handleEditTask    = { this.updateTask     } />
+        <div className="card">
+          <div className="card-status-bar card-cell incomplete">
+          </div>
+          <div className="card-content card-cell">
+            <div className="row">
+              <div className="col-sm-12 col-md-12 col-lg-12">
+                <TaskLongForm   task              = { this.state.task     }
+                                key               = { this.state.task.id  }
+                                handleEditTask    = { this.updateTask     } />
+              </div>
+            </div>
+                                
+            <div className="row">
+              <div className="col-sm-12 col-md-12 col-lg-12">
+                <Comments title             = "Comments"
+                          comments          = { this.state.comments }
+                          commentable_type  = 'Task'
+                          commentable_id    = { this.state.task.id }
+                          handleNewComment  = {this.addComment     } />
+              </div>
+            </div>
           </div>
         </div>
-                            
-        <div className="row">
-          <div className="col-sm-12 col-md-12 col-lg-12">
-            <CommentHeader  title             = "Comments" />
-            
-            <CommentList    comments          = { this.state.comments } />
-          </div>
-          <div className="col-sm-12 col-md-12 col-lg-12">
-            <CommentForm    commentable_type  = 'Task' 
-                            commentable_id    = { this.state.task.id  }
-                            handleNewComment  = { this.addComment     } />
-          </div>
-                            
-        </div>                                                        
       </div>
     );
   }

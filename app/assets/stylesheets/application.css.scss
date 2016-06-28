@@ -11,6 +11,9 @@
  * file per style scope.
  *
  *= require jquery-ui
+ *= require 'fontawesome'
  *= require_tree .
  *= require_self
  */
+
+@import "fontawesome"

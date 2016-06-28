@@ -32,6 +32,72 @@
   }
 }
 
+//-----------------------------------------------------------------------------
+// TODO: 06/24/2016 - NEW TASK CARD LAYOUT
+//-----------------------------------------------------------------------------
+div.task-card-tmp {
+  width:                      100%;
+  height:                     100%;
+  margin:                     0;
+  
+  .task-checkbox-tmp {
+    display:                  inline-block;
+    width:                    2.5em;
+    height:                   100%;
+    vertical-align:           top;
+    //margin:                   0.20em 0 0 0;
+  }
+  
+  .task-fields-tmp {
+    display:                  inline-block;
+    height:                   100%;
+    max-width:                90%;
+    min-width:                70%;
+    margin:                   0;
+    
+    .title {
+      h4 {
+        font-size:            1.80em;
+        margin-top:           0;
+        padding-bottom:       0.25em;
+        border-bottom:        1px solid $border;
+      }
+    }
+    
+    .description {
+      margin:                 0.75em 0;
+      font-size:              1.05em;
+      
+      //p {
+      //  font-size:            1.10em;
+      //}
+    }
+    
+    .blank-description {
+      //margin:                 0.75em 0;
+      
+      .panel-body {
+        padding:              0.50em;
+        color:                $grayed-out;
+        font-style:           italic;
+      }
+    }
+    
+    .due-date {
+      margin:                 0.75em 0;
+      font-size:              1.10em;
+    }
+    
+    .blank-due-date {
+      color:                  $grayed-out;
+      font-style:             italic;
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+// TODO: 06/24/2016 - ORIGINAL TASK CARD
+//-----------------------------------------------------------------------------
 div.task-card {
   width:                      100%;
   height:                     100%;
@@ -109,8 +175,16 @@ div.task-card {
 //-----------------------------------------------------------------------------
 // TaskLongForm
 //-----------------------------------------------------------------------------
+.task-section-div {
+  //** border:                     1px solid $border;
+  margin:                     0;
+  padding:                    1.0em;
+}
+
+/****************************
 .task-long-form-div {
   border:                     1px solid $border;
   margin:                     0;
   padding:                    1.0em;
 }
+****************************/

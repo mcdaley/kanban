@@ -39,10 +39,8 @@ class TasksController < ApplicationController
     @tasks  = @user.tasks.todos
     
     respond_to do |format|
-      format.html { render :index                   }
-      format.json { 
-        render json:  @tasks
-      }
+      format.html { render :index         }
+      format.json { render json:  @tasks  }
     end
   end
   

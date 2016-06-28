@@ -45,31 +45,76 @@ var TaskLongForm = React.createClass({
    */
   taskView: function() {
     console.log('[TaskLongForm]: taskView()');
-
-    return (
-      <div className="row">
-        <div className="col-sm-12 col-md-12 col-lg-12">
-          
-          <div className="task-long-form-div">
+    
+    // Create the task description style
+    var description;
+    if (this.props.task.description) {
+      description = (
+        <div className="description">
+          <p> {this.props.task.description} </p>
+        </div>);
+    }
+    else {
+      description = (
+        <div className="panel panel-default description blank-description">
+          <div className="panel-body">
+            Description...
+          </div>
+        </div>);
+    }
+    
+    // Create the due date style
+    var due_date;
+    if (this.props.task.due) {
+      due_date = (
+        <span className="due-date"> 
+          <i className="fa fa-lg fa-clock-o"></i>
+          <span> { formatDateString(this.props.task.due) } </span>
+        </span>
+      );
+    }
+    else {
+      due_date = (
+        <span className="due-date blank-due-date">
+          <i className="fa fa-lg fa-clock-o"></i>
+          <span> Due Date </span>
+        </span>
+      );
+    }
+                  
+    return (    
+      <div className="task-section-div">
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-lg-12">
             <div className="task-form-btns form-group">
               <button type      = "button" 
                       className = "btn btn-primary"
                       onClick   = {this.toggleEditMode}> Edit </button>
             </div>
-      
-            <div className="title">                  
-              <h4> {this.props.task.title} </h4>
-            </div>
-
-            <div className="description">
-              <p> {this.props.task.description} </p>
-            </div>
-
-            <div className="due">
-              <p> Due: {formatDateString(this.props.task.due) } </p>
-            </div>            
           </div>
-      
+        </div>
+  
+        <div className="row">
+          <div className="col-sm-12 col-md-12 col-lg-12">
+            <div className="task-card-tmp">
+              <div className="task-checkbox-tmp">
+                <i className="fa fa-2x fa-circle-o"></i>
+              </div>
+              <div className="task-fields-tmp">
+                <div className="title">                  
+                  <h4> {this.props.task.title} </h4>
+                </div>
+
+                <div className="description">
+                  {description}
+                </div>
+
+                <div className="due">
+                  {due_date}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

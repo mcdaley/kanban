@@ -8,11 +8,10 @@ var CommentHeader = React.createClass({
     
     return (
       <div className = "row">
-        <div className="col-sm-12 col-md-12 col-lg-12">
-          <h2> {label} </h2>
+        <div className="col-sm-12 col-md-12 col-lg-12 comment-title">
+          <h4> {label} </h4>
         </div>
       </div>
     );
   }
-  
 });

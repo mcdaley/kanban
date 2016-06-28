@@ -15,11 +15,9 @@ var CommentList = React.createClass({
     }.bind(this));
     
     return (
-      <div className="col-sm-12 col-md-12 col-lg-12">
-        <ul className="list-group  task-list-group">
-          {rows}
-        </ul>
-      </div>
+      <ul className="list-group  comment-list-group">
+        {rows}
+      </ul>
     );
   }
 });

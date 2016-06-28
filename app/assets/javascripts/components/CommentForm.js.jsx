@@ -69,7 +69,6 @@ var CommentForm = React.createClass({
           
           <form>      
             <div className='form-group'>
-              <label>   Add comment form </label>
               <textarea type          = 'text'         
                         className     = 'form-control' 
                         name          = 'body'  
