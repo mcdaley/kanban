@@ -5,7 +5,7 @@
 var TaskLongForm = React.createClass({
   
   getInitialState: function() {
-    return { edit: false }
+    return { edit: false, errors: {} }
   },
     
   toggleEditMode: function(event) {
@@ -53,10 +53,26 @@ var TaskLongForm = React.createClass({
       success:    function(data) {
         {this.setState({edit: false })};
         {this.props.handleEditTask( this.props.task, data)};
-      }.bind(this)
+      }.bind(this),
+      error: function(xhr, status, err) {
+        //this.handleSubmitError(xhr, status, err);
+        console.error('/tasks', status, err.toString() );
+        this.setState( { errors: xhr["responseJSON"] } );
+      }.bind(this),
     });
     
     return;
+  },
+  
+  hasError: function(name) {
+    if(this.state.errors.hasOwnProperty(name) ) {
+      return true;
+    }
+    return false;
+  },
+  
+  handleCancel: function(e) {
+    this.setState( this.getInitialState()  );
   },
   
   taskCheckbox: function() {
@@ -203,9 +219,10 @@ var TaskLongForm = React.createClass({
                             type        = "submit" >                Save  </button>
 
                     <button className   = "btn btn-default" 
-                            onClick     = { this.toggleEditMode } > Cancel </button>
+                            onClick     = { this.handleCancel } > Cancel </button>
                   </div>
-                  <div className="task-title form-group">
+
+                  <div className={ this.hasError('title') ? 'task-title form-group has-error' : 'task-title form-group'}>
                     <label>   Title </label>
                     <input    type          = 'text'   
                               className     = 'form-control' 
@@ -214,7 +231,10 @@ var TaskLongForm = React.createClass({
                               defaultValue  = {this.props.task.title} 
                               autoFocus     = 'true'
                               ref           = 'title' />
-                  </div>
+                    <span className={this.hasError('title') ? 'error-msg' : 'hidden'}> 
+                      { this.hasError('title') ? this.state.errors['title'][0] : '' } 
+                    </span>                    
+                  </div>                              
                     
                   <div className="task-description form-group">
                     <label> Description </label>
@@ -228,12 +248,15 @@ var TaskLongForm = React.createClass({
               
                   <div className="row">        
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                      <div className="task-due-date form-group">
+                      <div className={ this.hasError('due_text') ? 'task-due-date form-group has-error' : 'task-due-date form-group'}>
                         <label>     Due </label>
                         <DatePicker name          = 'due_text'
                                     placeholder   = 'mm/dd/yyyy'
                                     defaultValue  = {formatDateString(this.props.task.due)}
                                     ref           = 'due' />
+                        <span className={this.hasError('due_text') ? 'error-msg' : 'hidden'}> 
+                          { this.hasError('due_text') ? this.state.errors['due_text'][0] : '' } 
+                        </span>
                       </div>
                     </div>
                               
