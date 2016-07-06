@@ -56,8 +56,15 @@ div.task-card-tmp {
     display:                  inline-block;
     height:                   100%;
     max-width:                90%;
-    min-width:                70%;
+    min-width:                90%;
     margin:                   0;
+    
+/**************/    
+    @media only screen and (max-width: 480px) {
+      max-width:              80%;
+      min-width:              40%;
+    }
+/****************/
         
     .title {
       h4 {
