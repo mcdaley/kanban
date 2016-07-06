@@ -99,3 +99,13 @@ section {
   @extend .btn-primary;
   @extend .btn-xs;
 }
+
+.has-error > textarea {
+  background-color:           #F2DEDE;
+}
+
+.form-btn-row {
+  button {
+    margin-right:             0.25em;
+  }
+}

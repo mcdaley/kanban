@@ -55,6 +55,13 @@ var CommentForm = React.createClass({
     });
   },
   
+  hasError: function(name) {
+    if(this.state.errors.hasOwnProperty(name) ) {
+      return true;
+    }
+    return false;
+  },
+  
   handleClear: function(e) {
     console.log('[CommentForm]: handleClear()');
     this.setState( this.getInitialState() );
@@ -65,21 +72,25 @@ var CommentForm = React.createClass({
     
     return (      
       <form>      
-        <div className='form-group'>
+        <div className={ this.hasError('body') ? 'form-group has-error' : 'form-group'}>
           <textarea type          = 'text'         
                     className     = 'form-control' 
                     name          = 'body'  
                     placeholder   = 'Enter comment'
                     value         = {this.state.body}
                     onChange      = {this.handleChange} />
+          <span className={this.hasError('body') ? 'error-msg' : 'hidden'}> 
+            { this.hasError('body') ? this.state.errors['body'][0] : '' } 
+          </span>                    
         </div>
                                           
-        <button type      = "submit" 
-                className = "btn btn-primary" 
-                onClick   = {this.handleSubmit} > Add Comment  </button>
-        <button className = "btn btn-default"
-                onClick   = {this.handleClear}  > Clear        </button>
-                  
+        <span className="form-btn-row">
+          <button type      = "submit" 
+                  className = "btn btn-primary" 
+                  onClick   = {this.handleSubmit} > Add Comment  </button>
+          <button className = "btn btn-default"
+                  onClick   = {this.handleClear}  > Clear        </button>
+        </span>
       </form>
     );
   },

@@ -24,7 +24,9 @@ var DatePicker = React.createClass({
       
   handleChange: function(e) {
     console.log('[DatePicker] handleChange()');
-    this.props.handleChange(e);
+    if(this.props.handleChange) {
+      this.props.handleChange(e);
+    }
   },
   
   render: function() {
