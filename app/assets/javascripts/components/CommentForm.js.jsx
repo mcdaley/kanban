@@ -63,30 +63,24 @@ var CommentForm = React.createClass({
   commentForm: function() {
     console.log('[CommentForm] render()');
     
-    return (
-      <div className="row">
-        <div className="col-sm-12 col-md-12 col-lg-12">
-          
-          <form>      
-            <div className='form-group'>
-              <textarea type          = 'text'         
-                        className     = 'form-control' 
-                        name          = 'body'  
-                        placeholder   = 'Enter comment'
-                        value         = {this.state.body}
-                        onChange      = {this.handleChange} />
-            </div>
-                                                
-            <button type      = "submit" 
-                    className = "btn btn-primary" 
-                    onClick   = {this.handleSubmit} > Add Comment  </button>
-            <button className = "btn btn-default"
-                    onClick   = {this.handleClear}  > Clear        </button>
-                        
-          </form>
-                    
+    return (      
+      <form>      
+        <div className='form-group'>
+          <textarea type          = 'text'         
+                    className     = 'form-control' 
+                    name          = 'body'  
+                    placeholder   = 'Enter comment'
+                    value         = {this.state.body}
+                    onChange      = {this.handleChange} />
         </div>
-      </div>
+                                          
+        <button type      = "submit" 
+                className = "btn btn-primary" 
+                onClick   = {this.handleSubmit} > Add Comment  </button>
+        <button className = "btn btn-default"
+                onClick   = {this.handleClear}  > Clear        </button>
+                  
+      </form>
     );
   },
   

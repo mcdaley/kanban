@@ -34,6 +34,11 @@
 
 //-----------------------------------------------------------------------------
 // TODO: 06/24/2016 - NEW TASK CARD LAYOUT
+//
+// - CAN LOOK INTO USING MEDIA QUERIES TO HANDLE THE FACT THAT THE CHECKBOX
+//   AND TASK TITLE ARE MOVED TO SEPARATE LINES WHEN SCREEN SHRUNK TO A MOBILE
+//   DEVICE. I CAN SET DIFFERENT MIN/MAX WIDTH FOR COMPONENTS BASED ON THE 
+//   MOBILE DEVICE
 //-----------------------------------------------------------------------------
 div.task-card-tmp {
   width:                      100%;
@@ -45,7 +50,8 @@ div.task-card-tmp {
     width:                    2.5em;
     height:                   100%;
     vertical-align:           top;
-    //margin:                   0.20em 0 0 0;
+    margin-top:               0.20em;
+    color:                    $grayed-out;
     
     .complete-checkbox {
       color:                  $in-progress;
@@ -55,8 +61,8 @@ div.task-card-tmp {
   .task-fields-tmp {
     display:                  inline-block;
     height:                   100%;
-    max-width:                90%;
-    min-width:                70%;
+    max-width:                95%;
+    min-width:                90%;
     margin:                   0;
         
     .title {
@@ -189,6 +195,9 @@ div.task-card {
   //** border:                     1px solid $border;
   margin:                     0;
   padding:                    1.0em;
+}
+
+.task-form-btns {
 }
 
 /****************************

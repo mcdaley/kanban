@@ -19,9 +19,11 @@ var Comments = React.createClass({
           </div>
           <div className="row">
             <div className="col-sm-12 col-md-12 col-lg-12">
-              <CommentForm    commentable_type  = { this.props.commentable_type }
-                              commentable_id    = { this.props.commentable_id   }
-                              handleNewComment  = { this.props.handleNewComment } />
+              <div className="comment-form-div">
+                <CommentForm    commentable_type  = { this.props.commentable_type }
+                                commentable_id    = { this.props.commentable_id   }
+                                handleNewComment  = { this.props.handleNewComment } />
+              </div>
             </div>             
           </div>               
         </div>
