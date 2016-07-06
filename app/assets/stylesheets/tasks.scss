@@ -59,12 +59,10 @@ div.task-card-tmp {
     min-width:                90%;
     margin:                   0;
     
-/**************/    
     @media only screen and (max-width: 480px) {
       max-width:              80%;
       min-width:              40%;
     }
-/****************/
         
     .title {
       h4 {
